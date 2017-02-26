@@ -1,0 +1,43 @@
+  
+
+<Temperatur>					7,8
+<Max. Temperatur>				10,8
+<Min. Temperatur>				4,7
+<Luftfeuchtigkeit>				48
+<Max. Luftfeuchtigkeit>				76
+<Min. Luftfeuchtigkeit>				39
+<Luftdruck>					1023
+<Max. Luftdruck>				1023
+<Min. Luftdruck>				1020
+<Trend v. Luftdruck>				---
+<Windgeschwindigkeit>				8,7
+<durschn. 10 Min. Windgeschwindigkeit>		8,7
+<Max. Windgeschwindigkeit>			38,4
+<Windrichtung>					N
+<Tages Regenmenge>				0,9
+<24 Stunden Regenmenge>				0,9
+<Regenrate>					0,0
+<Vorhersagen>					---
+<Sonnenaufgang>					---
+<Sonnenabgang>					---
+<Mondfase>					---
+<durschn. 5 Min. Windgeschwindigkeit>		---
+<Tageszeit der Max. Temperatur>			00:06
+<Tageszeit der Min. Temperatur>			05:37
+<Tageszeit der Max. Luftfeuchtigkeit>		04:47
+<Tageszeit der Min. Luftfeuchtigkeit>		17:37
+<Tageszeit der Max. Luftdruck>			20:57
+<Tageszeit der Min. Luftdruck>			02:07
+<Tageszeit der Max. Windgeschwindigkeit>	02:57
+
+
+
+
+
+
+
+
+
+
+
+

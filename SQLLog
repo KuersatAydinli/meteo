@@ -1,0 +1,23 @@
+24.12.2012/02:36:
+--------------------------------
+UPDATE avg_jahr_meteo_mv 
+SET    m_j_avg_s3 = (SELECT avg(W3) FROM `messwerte` where YEAR(Messzeit) = 2012 GROUP BY YEAR(Messzeit)),
+    m_j_sum_s3 = (SELECT sum(W3) FROM `messwerte` where YEAR(Messzeit) = 2012 GROUP BY YEAR(Messzeit)),
+    m_j_min_s3 = (SELECT min(W3) FROM `messwerte` where YEAR(Messzeit) = 2012 GROUP BY YEAR(Messzeit)),
+    m_j_max_s3 = (SELECT max(W3) FROM `messwerte` where YEAR(Messzeit) = 2012 GROUP BY YEAR(Messzeit)) 
+WHERE  m_j_jahr = 2012;
+
+
+UPDATE avg_monat_meteo_mv 
+SET    m_m_avg_s3 = (SELECT avg(W3) FROM `messwerte` where YEAR(Messzeit) = 2012 and MONTH(Messzeit) = 12 GROUP BY YEAR(Messzeit),MONTH(Messzeit)),
+    m_m_sum_s3 = (SELECT sum(W3) FROM `messwerte` where YEAR(Messzeit) = 2012 and MONTH(Messzeit) = 12 GROUP BY YEAR(Messzeit),MONTH(Messzeit)),
+    m_m_min_s3 = (SELECT min(W3) FROM `messwerte` where YEAR(Messzeit) = 2012 and MONTH(Messzeit) = 12 GROUP BY YEAR(Messzeit),MONTH(Messzeit)),
+    m_m_max_s3 = (SELECT max(W3) FROM `messwerte` where YEAR(Messzeit) = 2012 and MONTH(Messzeit) = 12 GROUP BY YEAR(Messzeit),MONTH(Messzeit)) 
+WHERE  m_m_jahr = 2012 and m_m_monat = 12;
+
+UPDATE avg_tag_meteo_mv 
+SET    m_t_avg_s3 = (SELECT avg(W3) FROM `messwerte` where YEAR(Messzeit)=2012 and MONTH(Messzeit)=12 and DAY(Messzeit)=19 GROUP BY YEAR(Messzeit),MONTH(Messzeit),DAY(Messzeit)),
+    m_t_sum_s3 = (SELECT sum(W3) FROM `messwerte` where YEAR(Messzeit)=2012 and MONTH(Messzeit)=12 and DAY(Messzeit)=19 GROUP BY YEAR(Messzeit),MONTH(Messzeit),DAY(Messzeit)),
+    m_t_min_s3 = (SELECT min(W3) FROM `messwerte` where YEAR(Messzeit)=2012 and MONTH(Messzeit)=12 and DAY(Messzeit)=19 GROUP BY YEAR(Messzeit),MONTH(Messzeit),DAY(Messzeit)),
+    m_t_max_s3 = (SELECT max(W3) FROM `messwerte` where YEAR(Messzeit)=2012 and MONTH(Messzeit)=12 and DAY(Messzeit)=19 GROUP BY YEAR(Messzeit),MONTH(Messzeit),DAY(Messzeit)) 
+WHERE  m_t_jahr = 2012 and m_t_monat = 12 and m_t_tag = 19;

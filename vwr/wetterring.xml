@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+<wetterring-template>
+
+    <update>
+        <datum>26.02.2017</datum>
+        <zeit>15:40</zeit>
+    </update>
+
+    <temperatur>
+        <aktuell>10,7</aktuell>
+        <tag-min>0,6</tag-min>
+        <tag-max>11,0</tag-max>
+        <tag-min-zeit>06:45</tag-min-zeit>
+        <tag-max-zeit>15:25</tag-max-zeit>
+        <monat-min>-2,7</monat-min>
+        <monat-max>19,4</monat-max>
+        <jahr-min>-14,9</jahr-min>
+        <jahr-max>19,4</jahr-max>
+    </temperatur>
+    
+    <taupunkt>
+        <aktuell>-1,1</aktuell>
+    </taupunkt>
+    
+    <luftdruck>
+        <aktuell>1023</aktuell>
+        <tag-min>1019</tag-min>
+        <tag-max>1027</tag-max>
+        <tag-min-zeit>02:24</tag-min-zeit>
+        <tag-max-zeit>10:45</tag-max-zeit>
+        <tendenz>---</tendenz>
+    </luftdruck>
+    
+    <luftfeuchtigkeit>
+        <aktuell>39</aktuell>
+        <tag-min>32</tag-min>
+        <tag-max>71</tag-max>
+        <tag-min-zeit>12:25</tag-min-zeit>
+        <tag-max-zeit>07:35</tag-max-zeit>
+    </luftfeuchtigkeit>
+    
+    <regen>
+        <rate>0,0</rate>
+        <tag>0,0</tag>
+        <monat>8,3</monat>
+        <jahr>29,8</jahr>
+    </regen>
+    
+    <wind>
+        <geschwindigkeit>
+        	<aktuell-Windboeen>15,7</aktuell-Windboeen>
+        	<aktuell-Wind>8,9</aktuell-Wind>
+        	<tag-max>10,9</tag-max>
+        	<tag-max-zeit>09:45</tag-max-zeit>
+        	<monat-max>76,0</monat-max>
+        	<jahr-max>97,5</jahr-max>
+        	<durchschnitt>8,9</durchschnitt>
+        </geschwindigkeit>
+        <richtung>SW</richtung>
+    </wind>
+    
+    <sonne>
+        <sonnenstunden>---</sonnenstunden>
+        <watt-aktuell>160,1</watt-aktuell>
+    </sonne>
+    
+</wetterring-template>

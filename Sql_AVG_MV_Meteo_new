@@ -1,0 +1,571 @@
+SELECT * FROM `avg_tag_meteo_mv` WHERE m_t_jahr = 2012 and m_t_monat = 10;
+SELECT * FROM `avg_tag_boden_mv` WHERE b_t_jahr = 2012 and b_t_monat = 10;
+
+----------------------------------------------------------------------
+http://www.fromdual.com/mysql-materialized-views
+----------------------------------------------------------------------
+
+
+DROP TABLE avg_jahr_meteo_mv;
+CREATE TABLE avg_jahr_meteo_mv (
+  m_j_jahr         int  NOT NULL
+  , m_j_avg_s0       FLOAT NOT NULL
+  , m_j_avg_s1       FLOAT NOT NULL
+  , m_j_avg_s2       FLOAT NOT NULL
+  , m_j_avg_s3       FLOAT NOT NULL
+  , m_j_avg_s4       FLOAT NOT NULL
+  , m_j_avg_s5       FLOAT NOT NULL
+  , m_j_avg_s6       FLOAT NOT NULL
+  , m_j_sum_s0       FLOAT NOT NULL
+  , m_j_sum_s1       FLOAT NOT NULL
+  , m_j_sum_s2       FLOAT NOT NULL
+  , m_j_sum_s3       FLOAT NOT NULL
+  , m_j_sum_s4       FLOAT NOT NULL
+  , m_j_sum_s5       FLOAT NOT NULL
+  , m_j_sum_s6       FLOAT NOT NULL
+  , m_j_min_s0       FLOAT NOT NULL
+  , m_j_min_s1       FLOAT NOT NULL
+  , m_j_min_s2       FLOAT NOT NULL
+  , m_j_min_s3       FLOAT NOT NULL
+  , m_j_min_s4       FLOAT NOT NULL
+  , m_j_min_s5       FLOAT NOT NULL
+  , m_j_min_s6       FLOAT NOT NULL
+  , m_j_max_s0       FLOAT NOT NULL
+  , m_j_max_s1       FLOAT NOT NULL
+  , m_j_max_s2       FLOAT NOT NULL
+  , m_j_max_s3       FLOAT NOT NULL
+  , m_j_max_s4       FLOAT NOT NULL
+  , m_j_max_s5       FLOAT NOT NULL
+  , m_j_max_s6       FLOAT NOT NULL
+  , m_j_mess_cnt	 INT	      NOT NULL
+  , UNIQUE INDEX jahr_id (m_j_jahr)
+);
+
+INSERT INTO avg_jahr_meteo_mv
+SELECT YEAR(Messzeit),
+avg(W0),avg(W1),avg(W2),avg(W3),avg(W4),avg(W5),avg(W6),
+sum(W0),sum(W1),sum(W2),sum(W3),sum(W4),sum(W5),sum(W6),
+min(W0),min(W1),min(W2),min(W3),min(W4),min(W5),min(W6),
+max(W0),max(W1),max(W2),max(W3),max(W4),max(W5),max(W6),
+count(*)
+  FROM `messwerte`
+GROUP BY YEAR(Messzeit);
+
+
+---------------------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------------------
+--Spezialfall Regensensor Update einmal im Monat
+UPDATE avg_jahr_meteo_mv 
+SET    m_j_avg_s3 = (SELECT avg(W3) FROM `messwerte` where YEAR(Messzeit) = 2012 GROUP BY YEAR(Messzeit)),
+    m_j_sum_s3 = (SELECT sum(W3) FROM `messwerte` where YEAR(Messzeit) = 2012 GROUP BY YEAR(Messzeit)),
+    m_j_min_s3 = (SELECT min(W3) FROM `messwerte` where YEAR(Messzeit) = 2012 GROUP BY YEAR(Messzeit)),
+    m_j_max_s3 = (SELECT max(W3) FROM `messwerte` where YEAR(Messzeit) = 2012 GROUP BY YEAR(Messzeit)) 
+WHERE  m_j_jahr = 2012;
+---------------------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------------------
+
+------------------------------------------------------
+
+DROP TABLE avg_monat_meteo_mv;
+CREATE TABLE avg_monat_meteo_mv (
+  m_m_jahr         int  NOT NULL
+  , m_m_monat      int  NOT NULL
+  , m_m_avg_s0       FLOAT NOT NULL
+  , m_m_avg_s1       FLOAT NOT NULL
+  , m_m_avg_s2       FLOAT NOT NULL
+  , m_m_avg_s3       FLOAT NOT NULL
+  , m_m_avg_s4       FLOAT NOT NULL
+  , m_m_avg_s5       FLOAT NOT NULL
+  , m_m_avg_s6       FLOAT NOT NULL
+  , m_m_sum_s0       FLOAT NOT NULL
+  , m_m_sum_s1       FLOAT NOT NULL
+  , m_m_sum_s2       FLOAT NOT NULL
+  , m_m_sum_s3       FLOAT NOT NULL
+  , m_m_sum_s4       FLOAT NOT NULL
+  , m_m_sum_s5       FLOAT NOT NULL
+  , m_m_sum_s6       FLOAT NOT NULL
+  , m_m_min_s0       FLOAT NOT NULL
+  , m_m_min_s1       FLOAT NOT NULL
+  , m_m_min_s2       FLOAT NOT NULL
+  , m_m_min_s3       FLOAT NOT NULL
+  , m_m_min_s4       FLOAT NOT NULL
+  , m_m_min_s5       FLOAT NOT NULL
+  , m_m_min_s6       FLOAT NOT NULL
+  , m_m_max_s0       FLOAT NOT NULL
+  , m_m_max_s1       FLOAT NOT NULL
+  , m_m_max_s2       FLOAT NOT NULL
+  , m_m_max_s3       FLOAT NOT NULL
+  , m_m_max_s4       FLOAT NOT NULL
+  , m_m_max_s5       FLOAT NOT NULL
+  , m_m_max_s6       FLOAT NOT NULL
+  , m_m_mess_cnt	 INT	      NOT NULL
+  , UNIQUE INDEX jahr_monat_id (m_m_jahr, m_m_monat)
+);
+
+INSERT INTO avg_monat_meteo_mv
+SELECT YEAR(Messzeit),MONTH(Messzeit),
+avg(W0),avg(W1),avg(W2),avg(W3),avg(W4),avg(W5),avg(W6),
+sum(W0),sum(W1),sum(W2),sum(W3),sum(W4),sum(W5),sum(W6),
+min(W0),min(W1),min(W2),min(W3),min(W4),min(W5),min(W6),
+max(W0),max(W1),max(W2),max(W3),max(W4),max(W5),max(W6),
+count(*)
+  FROM `messwerte`
+GROUP BY YEAR(Messzeit),MONTH(Messzeit);
+
+
+---------------------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------------------
+--Spezialfall Regensensor Update einmal im Monat
+UPDATE avg_monat_meteo_mv 
+SET    m_m_avg_s3 = (SELECT avg(W3) FROM `messwerte` where YEAR(Messzeit) = 2012 and MONTH(Messzeit) = 11 GROUP BY YEAR(Messzeit),MONTH(Messzeit)),
+    m_m_sum_s3 = (SELECT sum(W3) FROM `messwerte` where YEAR(Messzeit) = 2012 and MONTH(Messzeit) = 11 GROUP BY YEAR(Messzeit),MONTH(Messzeit)),
+    m_m_min_s3 = (SELECT min(W3) FROM `messwerte` where YEAR(Messzeit) = 2012 and MONTH(Messzeit) = 11 GROUP BY YEAR(Messzeit),MONTH(Messzeit)),
+    m_m_max_s3 = (SELECT max(W3) FROM `messwerte` where YEAR(Messzeit) = 2012 and MONTH(Messzeit) = 11 GROUP BY YEAR(Messzeit),MONTH(Messzeit)) 
+WHERE  m_m_jahr = 2012 and m_m_monat = 11;
+---------------------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------------------
+
+
+------------------------------------------------------
+
+DROP TABLE avg_tag_meteo_mv;
+CREATE TABLE avg_tag_meteo_mv (
+  m_t_jahr         int  NOT NULL
+  , m_t_monat      int  NOT NULL
+  , m_t_tag			int NOT NULL
+  , m_t_avg_s0       FLOAT NOT NULL
+  , m_t_avg_s1       FLOAT NOT NULL
+  , m_t_avg_s2       FLOAT NOT NULL
+  , m_t_avg_s3       FLOAT NOT NULL
+  , m_t_avg_s4       FLOAT NOT NULL
+  , m_t_avg_s5       FLOAT NOT NULL
+  , m_t_avg_s6       FLOAT NOT NULL
+  , m_t_sum_s0       FLOAT NOT NULL
+  , m_t_sum_s1       FLOAT NOT NULL
+  , m_t_sum_s2       FLOAT NOT NULL
+  , m_t_sum_s3       FLOAT NOT NULL
+  , m_t_sum_s4       FLOAT NOT NULL
+  , m_t_sum_s5       FLOAT NOT NULL
+  , m_t_sum_s6       FLOAT NOT NULL
+  , m_t_min_s0       FLOAT NOT NULL
+  , m_t_min_s1       FLOAT NOT NULL
+  , m_t_min_s2       FLOAT NOT NULL
+  , m_t_min_s3       FLOAT NOT NULL
+  , m_t_min_s4       FLOAT NOT NULL
+  , m_t_min_s5       FLOAT NOT NULL
+  , m_t_min_s6       FLOAT NOT NULL
+  , m_t_max_s0       FLOAT NOT NULL
+  , m_t_max_s1       FLOAT NOT NULL
+  , m_t_max_s2       FLOAT NOT NULL
+  , m_t_max_s3       FLOAT NOT NULL
+  , m_t_max_s4       FLOAT NOT NULL
+  , m_t_max_s5       FLOAT NOT NULL
+  , m_t_max_s6       FLOAT NOT NULL
+  , m_t_mess_cnt	 INT	      NOT NULL
+  , UNIQUE INDEX jahr_monat_tag__id (m_t_jahr, m_t_monat,m_t_tag)
+);
+
+INSERT INTO avg_tag_meteo_mv
+SELECT YEAR(Messzeit),MONTH(Messzeit),DAY(Messzeit),
+avg(W0),avg(W1),avg(W2),avg(W3),avg(W4),avg(W5),avg(W6),
+sum(W0),sum(W1),sum(W2),sum(W3),sum(W4),sum(W5),sum(W6),
+min(W0),min(W1),min(W2),min(W3),min(W4),min(W5),min(W6),
+max(W0),max(W1),max(W2),max(W3),max(W4),max(W5),max(W6),
+count(*)
+  FROM `messwerte`
+GROUP BY YEAR(Messzeit),MONTH(Messzeit),DAY(Messzeit);
+
+---------------------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------------------
+--Spezialfall Regensensor Update einmal im Monat
+UPDATE avg_tag_meteo_mv 
+SET    m_t_avg_s3 = (SELECT avg(W3) FROM `messwerte` where YEAR(Messzeit)=2012 and MONTH(Messzeit)=11 and DAY(Messzeit)=22 GROUP BY YEAR(Messzeit),MONTH(Messzeit),DAY(Messzeit)),
+    m_t_sum_s3 = (SELECT sum(W3) FROM `messwerte` where YEAR(Messzeit)=2012 and MONTH(Messzeit)=11 and DAY(Messzeit)=22 GROUP BY YEAR(Messzeit),MONTH(Messzeit),DAY(Messzeit)),
+    m_t_min_s3 = (SELECT min(W3) FROM `messwerte` where YEAR(Messzeit)=2012 and MONTH(Messzeit)=11 and DAY(Messzeit)=22 GROUP BY YEAR(Messzeit),MONTH(Messzeit),DAY(Messzeit)),
+    m_t_max_s3 = (SELECT max(W3) FROM `messwerte` where YEAR(Messzeit)=2012 and MONTH(Messzeit)=11 and DAY(Messzeit)=22 GROUP BY YEAR(Messzeit),MONTH(Messzeit),DAY(Messzeit)) 
+WHERE  m_t_jahr = 2012 and m_t_monat = 11 and m_t_tag = 22;
+---------------------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------------------
+
+
+
+-----------------------------------------------------------------------------------------------
+TRIGERS Jahr_, Monat_, Tag_MV
+-----------------------------------------------------------------------------------------------
+DROP TRIGGER messwerte_jmt_ins;
+
+DELIMITER $$
+
+CREATE TRIGGER messwerte_jmt_ins
+AFTER INSERT ON messwerte
+FOR EACH ROW
+BEGIN
+
+  declare m_j_old_avg_s0 float default  0;
+  declare m_j_old_avg_s1 float default  0;
+  declare m_j_old_avg_s2 float default  0;
+  declare m_j_old_avg_s3 float default  0;
+  declare m_j_old_avg_s4 float default  0;
+  declare m_j_old_avg_s5 float default  0;
+  declare m_j_old_avg_s6 float default  0;
+  declare m_j_old_sum_s0 float default  0;
+  declare m_j_old_sum_s1 float default  0;
+  declare m_j_old_sum_s2 float default  0;
+  declare m_j_old_sum_s3 float default  0;
+  declare m_j_old_sum_s4 float default  0;
+  declare m_j_old_sum_s5 float default  0;
+  declare m_j_old_sum_s6 float default  0;
+  declare m_j_old_min_s0 float default  999999;
+  declare m_j_old_min_s1 float default  999999;
+  declare m_j_old_min_s2 float default  999999;
+  declare m_j_old_min_s3 float default  999999;
+  declare m_j_old_min_s4 float default  999999;
+  declare m_j_old_min_s5 float default  999999;
+  declare m_j_old_min_s6 float default  999999;
+  declare m_j_old_max_s0 float default  -999999;
+  declare m_j_old_max_s1 float default  -999999;
+  declare m_j_old_max_s2 float default  -999999;
+  declare m_j_old_max_s3 float default  -999999;
+  declare m_j_old_max_s4 float default  -999999;
+  declare m_j_old_max_s5 float default  -999999;
+  declare m_j_old_max_s6 float default  -999999;  
+  declare m_j_old_mess_cnt int default 0;
+
+   declare m_j_new_sum_s0 float default  0; 
+   declare m_j_new_sum_s1 float default  0; 
+   declare m_j_new_sum_s2 float default  0; 
+   declare m_j_new_sum_s3 float default  0; 
+   declare m_j_new_sum_s4 float default  0; 
+   declare m_j_new_sum_s5 float default  0; 
+   declare m_j_new_sum_s6 float default  0; 
+   declare m_j_new_avg_s0 float default  0; 
+   declare m_j_new_avg_s1 float default  0; 
+   declare m_j_new_avg_s2 float default  0; 
+   declare m_j_new_avg_s3 float default  0; 
+   declare m_j_new_avg_s4 float default  0; 
+   declare m_j_new_avg_s5 float default  0; 
+   declare m_j_new_avg_s6 float default  0; 
+   declare m_j_new_min_s0 float default  0; 
+   declare m_j_new_min_s1 float default  0; 
+   declare m_j_new_min_s2 float default  0; 
+   declare m_j_new_min_s3 float default  0; 
+   declare m_j_new_min_s4 float default  0; 
+   declare m_j_new_min_s5 float default  0; 
+   declare m_j_new_min_s6 float default  0; 
+   declare m_j_new_max_s0 float default  0; 
+   declare m_j_new_max_s1 float default  0; 
+   declare m_j_new_max_s2 float default  0; 
+   declare m_j_new_max_s3 float default  0; 
+   declare m_j_new_max_s4 float default  0; 
+   declare m_j_new_max_s5 float default  0; 
+   declare m_j_new_max_s6 float default  0; 
+   declare m_j_new_mess_cnt int default  0; 
+
+-- ----------------------------------------------
+  declare m_m_old_avg_s0 float default  0;
+  declare m_m_old_avg_s1 float default  0;
+  declare m_m_old_avg_s2 float default  0;
+  declare m_m_old_avg_s3 float default  0;
+  declare m_m_old_avg_s4 float default  0;
+  declare m_m_old_avg_s5 float default  0;
+  declare m_m_old_avg_s6 float default  0;
+  declare m_m_old_sum_s0 float default  0;
+  declare m_m_old_sum_s1 float default  0;
+  declare m_m_old_sum_s2 float default  0;
+  declare m_m_old_sum_s3 float default  0;
+  declare m_m_old_sum_s4 float default  0;
+  declare m_m_old_sum_s5 float default  0;
+  declare m_m_old_sum_s6 float default  0;
+  declare m_m_old_min_s0 float default  999999;
+  declare m_m_old_min_s1 float default  999999;
+  declare m_m_old_min_s2 float default  999999;
+  declare m_m_old_min_s3 float default  999999;
+  declare m_m_old_min_s4 float default  999999;
+  declare m_m_old_min_s5 float default  999999;
+  declare m_m_old_min_s6 float default  999999;
+  declare m_m_old_max_s0 float default  -999999;
+  declare m_m_old_max_s1 float default  -999999;
+  declare m_m_old_max_s2 float default  -999999;
+  declare m_m_old_max_s3 float default  -999999;
+  declare m_m_old_max_s4 float default  -999999;
+  declare m_m_old_max_s5 float default  -999999;
+  declare m_m_old_max_s6 float default  -999999;  
+  declare m_m_old_mess_cnt int default 0;
+
+   declare m_m_new_sum_s0 float default  0; 
+   declare m_m_new_sum_s1 float default  0; 
+   declare m_m_new_sum_s2 float default  0; 
+   declare m_m_new_sum_s3 float default  0; 
+   declare m_m_new_sum_s4 float default  0; 
+   declare m_m_new_sum_s5 float default  0; 
+   declare m_m_new_sum_s6 float default  0; 
+   declare m_m_new_avg_s0 float default  0; 
+   declare m_m_new_avg_s1 float default  0; 
+   declare m_m_new_avg_s2 float default  0; 
+   declare m_m_new_avg_s3 float default  0; 
+   declare m_m_new_avg_s4 float default  0; 
+   declare m_m_new_avg_s5 float default  0; 
+   declare m_m_new_avg_s6 float default  0; 
+   declare m_m_new_min_s0 float default  0; 
+   declare m_m_new_min_s1 float default  0; 
+   declare m_m_new_min_s2 float default  0; 
+   declare m_m_new_min_s3 float default  0; 
+   declare m_m_new_min_s4 float default  0; 
+   declare m_m_new_min_s5 float default  0; 
+   declare m_m_new_min_s6 float default  0; 
+   declare m_m_new_max_s0 float default  0; 
+   declare m_m_new_max_s1 float default  0; 
+   declare m_m_new_max_s2 float default  0; 
+   declare m_m_new_max_s3 float default  0; 
+   declare m_m_new_max_s4 float default  0; 
+   declare m_m_new_max_s5 float default  0; 
+   declare m_m_new_max_s6 float default  0; 
+   declare m_m_new_mess_cnt int default  0; 
+
+-- -----------------------------------------------
+  declare m_t_old_avg_s0 float default  0;
+  declare m_t_old_avg_s1 float default  0;
+  declare m_t_old_avg_s2 float default  0;
+  declare m_t_old_avg_s3 float default  0;
+  declare m_t_old_avg_s4 float default  0;
+  declare m_t_old_avg_s5 float default  0;
+  declare m_t_old_avg_s6 float default  0;
+  declare m_t_old_sum_s0 float default  0;
+  declare m_t_old_sum_s1 float default  0;
+  declare m_t_old_sum_s2 float default  0;
+  declare m_t_old_sum_s3 float default  0;
+  declare m_t_old_sum_s4 float default  0;
+  declare m_t_old_sum_s5 float default  0;
+  declare m_t_old_sum_s6 float default  0;
+  declare m_t_old_min_s0 float default  999999;
+  declare m_t_old_min_s1 float default  999999;
+  declare m_t_old_min_s2 float default  999999;
+  declare m_t_old_min_s3 float default  999999;
+  declare m_t_old_min_s4 float default  999999;
+  declare m_t_old_min_s5 float default  999999;
+  declare m_t_old_min_s6 float default  999999;
+  declare m_t_old_max_s0 float default  -999999;
+  declare m_t_old_max_s1 float default  -999999;
+  declare m_t_old_max_s2 float default  -999999;
+  declare m_t_old_max_s3 float default  -999999;
+  declare m_t_old_max_s4 float default  -999999;
+  declare m_t_old_max_s5 float default  -999999;
+  declare m_t_old_max_s6 float default  -999999;  
+  declare m_t_old_mess_cnt int default 0;
+
+   declare m_t_new_sum_s0 float default  0; 
+   declare m_t_new_sum_s1 float default  0; 
+   declare m_t_new_sum_s2 float default  0; 
+   declare m_t_new_sum_s3 float default  0; 
+   declare m_t_new_sum_s4 float default  0; 
+   declare m_t_new_sum_s5 float default  0; 
+   declare m_t_new_sum_s6 float default  0; 
+   declare m_t_new_avg_s0 float default  0; 
+   declare m_t_new_avg_s1 float default  0; 
+   declare m_t_new_avg_s2 float default  0; 
+   declare m_t_new_avg_s3 float default  0; 
+   declare m_t_new_avg_s4 float default  0; 
+   declare m_t_new_avg_s5 float default  0; 
+   declare m_t_new_avg_s6 float default  0; 
+   declare m_t_new_min_s0 float default  0; 
+   declare m_t_new_min_s1 float default  0; 
+   declare m_t_new_min_s2 float default  0; 
+   declare m_t_new_min_s3 float default  0; 
+   declare m_t_new_min_s4 float default  0; 
+   declare m_t_new_min_s5 float default  0; 
+   declare m_t_new_min_s6 float default  0; 
+   declare m_t_new_max_s0 float default  0; 
+   declare m_t_new_max_s1 float default  0; 
+   declare m_t_new_max_s2 float default  0; 
+   declare m_t_new_max_s3 float default  0; 
+   declare m_t_new_max_s4 float default  0; 
+   declare m_t_new_max_s5 float default  0; 
+   declare m_t_new_max_s6 float default  0; 
+   declare m_t_new_mess_cnt int default  0; 
+
+-- ---------------------------------------------
+  declare akt_timestamp datetime;
+  declare akt_jahr int;
+  declare akt_monat int;
+  declare akt_tag int;
+
+  SET akt_timestamp = NEW.Messzeit;
+  SET akt_jahr = YEAR(akt_timestamp);
+  SET akt_monat = MONTH(akt_timestamp);
+  SET akt_tag = DAY(akt_timestamp);
+
+-- -------------------------------------------------
+
+  SELECT IFNULL(m_j_avg_s0, 0), IFNULL(m_j_avg_s1, 0), IFNULL(m_j_avg_s2, 0), IFNULL(m_j_avg_s3, 0), IFNULL(m_j_avg_s4, 0), IFNULL(m_j_avg_s5, 0), IFNULL(m_j_avg_s6, 0),
+  		 IFNULL(m_j_sum_s0, 0), IFNULL(m_j_sum_s1, 0), IFNULL(m_j_sum_s2, 0), IFNULL(m_j_sum_s3, 0), IFNULL(m_j_sum_s4, 0), IFNULL(m_j_sum_s5, 0), IFNULL(m_j_sum_s6, 0),
+  		 IFNULL(m_j_min_s0, 999999), IFNULL(m_j_min_s1, 999999), IFNULL(m_j_min_s2, 999999), IFNULL(m_j_min_s3, 999999), IFNULL(m_j_min_s4, 999999), IFNULL(m_j_min_s5, 999999), IFNULL(m_j_min_s6, 999999),
+  		 IFNULL(m_j_max_s0, -999999), IFNULL(m_j_max_s1, -999999), IFNULL(m_j_max_s2, -999999), IFNULL(m_j_max_s3, -999999), IFNULL(m_j_max_s4, -999999), IFNULL(m_j_max_s5, -999999), IFNULL(m_j_max_s6, -999999),
+  		 IFNULL(m_j_mess_cnt, 0)
+    FROM avg_jahr_meteo_mv
+   WHERE m_j_jahr = akt_jahr
+    INTO m_j_old_avg_s0, m_j_old_avg_s1, m_j_old_avg_s2, m_j_old_avg_s3, m_j_old_avg_s4, m_j_old_avg_s5, m_j_old_avg_s6,
+    	 m_j_old_sum_s0, m_j_old_sum_s1, m_j_old_sum_s2, m_j_old_sum_s3, m_j_old_sum_s4, m_j_old_sum_s5, m_j_old_sum_s6,
+    	 m_j_old_min_s0, m_j_old_min_s1, m_j_old_min_s2, m_j_old_min_s3, m_j_old_min_s4, m_j_old_min_s5, m_j_old_min_s6,
+    	 m_j_old_max_s0, m_j_old_max_s1, m_j_old_max_s2, m_j_old_max_s3, m_j_old_max_s4, m_j_old_max_s5, m_j_old_max_s6,
+    	 m_j_old_mess_cnt       
+  ;
+
+   SET m_j_new_sum_s0 = m_j_old_sum_s0 + NEW.W0;
+   SET m_j_new_sum_s1 = m_j_old_sum_s1 + NEW.W1;
+   SET m_j_new_sum_s2 = m_j_old_sum_s2 + NEW.W2;
+   SET m_j_new_sum_s3 = m_j_old_sum_s3 + NEW.W3;
+   SET m_j_new_sum_s4 = m_j_old_sum_s4 + NEW.W4;
+   SET m_j_new_sum_s5 = m_j_old_sum_s5 + NEW.W5;
+   SET m_j_new_sum_s6 = m_j_old_sum_s6 + NEW.W6;
+  
+   SET m_j_new_mess_cnt = m_j_old_mess_cnt + 1;
+  
+   SET m_j_new_avg_s0 = m_j_new_sum_s0 / m_j_new_mess_cnt;
+   SET m_j_new_avg_s1 = m_j_new_sum_s1 / m_j_new_mess_cnt;
+   SET m_j_new_avg_s2 = m_j_new_sum_s2 / m_j_new_mess_cnt;
+   SET m_j_new_avg_s3 = m_j_new_sum_s3 / m_j_new_mess_cnt;
+   SET m_j_new_avg_s4 = m_j_new_sum_s4 / m_j_new_mess_cnt;
+   SET m_j_new_avg_s5 = m_j_new_sum_s5 / m_j_new_mess_cnt;
+   SET m_j_new_avg_s6 = m_j_new_sum_s6 / m_j_new_mess_cnt;
+  
+   SET m_j_new_min_s0 = IF(NEW.W0 < m_j_old_min_s0,NEW.W0,m_j_old_min_s0);
+   SET m_j_new_min_s1 = IF(NEW.W1 < m_j_old_min_s1,NEW.W1,m_j_old_min_s1);
+   SET m_j_new_min_s2 = IF(NEW.W2 < m_j_old_min_s2,NEW.W2,m_j_old_min_s2);
+   SET m_j_new_min_s3 = IF(NEW.W3 < m_j_old_min_s3,NEW.W3,m_j_old_min_s3);
+   SET m_j_new_min_s4 = IF(NEW.W4 < m_j_old_min_s4,NEW.W4,m_j_old_min_s4);
+   SET m_j_new_min_s5 = IF(NEW.W5 < m_j_old_min_s5,NEW.W5,m_j_old_min_s5);
+   SET m_j_new_min_s6 = IF(NEW.W6 < m_j_old_min_s6,NEW.W6,m_j_old_min_s6);
+  
+   SET m_j_new_max_s0 = IF(NEW.W0 > m_j_old_max_s0,NEW.W0,m_j_old_max_s0);
+   SET m_j_new_max_s1 = IF(NEW.W1 > m_j_old_max_s1,NEW.W1,m_j_old_max_s1);
+   SET m_j_new_max_s2 = IF(NEW.W2 > m_j_old_max_s2,NEW.W2,m_j_old_max_s2);
+   SET m_j_new_max_s3 = IF(NEW.W3 > m_j_old_max_s3,NEW.W3,m_j_old_max_s3);
+   SET m_j_new_max_s4 = IF(NEW.W4 > m_j_old_max_s4,NEW.W4,m_j_old_max_s4);
+   SET m_j_new_max_s5 = IF(NEW.W5 > m_j_old_max_s5,NEW.W5,m_j_old_max_s5);
+   SET m_j_new_max_s6 = IF(NEW.W6 > m_j_old_max_s6,NEW.W6,m_j_old_max_s6);
+
+
+  REPLACE INTO avg_jahr_meteo_mv
+  VALUES(akt_jahr,m_j_new_avg_s0, m_j_new_avg_s1,m_j_new_avg_s2,m_j_new_avg_s3,m_j_new_avg_s4,m_j_new_avg_s5,m_j_new_avg_s6, 
+  		 m_j_new_sum_s0, m_j_new_sum_s1,m_j_new_sum_s2,m_j_new_sum_s3,m_j_new_sum_s4,m_j_new_sum_s5,m_j_new_sum_s6,
+  		 m_j_new_min_s0, m_j_new_min_s1,m_j_new_min_s2,m_j_new_min_s3,m_j_new_min_s4,m_j_new_min_s5,m_j_new_min_s6,
+  		 m_j_new_max_s0, m_j_new_max_s1,m_j_new_max_s2,m_j_new_max_s3,m_j_new_max_s4,m_j_new_max_s5,m_j_new_max_s6,
+         m_j_new_mess_cnt);
+-- ---------------
+
+  SELECT IFNULL(m_m_avg_s0, 0), IFNULL(m_m_avg_s1, 0), IFNULL(m_m_avg_s2, 0), IFNULL(m_m_avg_s3, 0), IFNULL(m_m_avg_s4, 0), IFNULL(m_m_avg_s5, 0), IFNULL(m_m_avg_s6, 0),
+  		 IFNULL(m_m_sum_s0, 0), IFNULL(m_m_sum_s1, 0), IFNULL(m_m_sum_s2, 0), IFNULL(m_m_sum_s3, 0), IFNULL(m_m_sum_s4, 0), IFNULL(m_m_sum_s5, 0), IFNULL(m_m_sum_s6, 0),
+  		 IFNULL(m_m_min_s0, 999999), IFNULL(m_m_min_s1, 999999), IFNULL(m_m_min_s2, 999999), IFNULL(m_m_min_s3, 999999), IFNULL(m_m_min_s4, 999999), IFNULL(m_m_min_s5, 999999), IFNULL(m_m_min_s6, 999999),
+  		 IFNULL(m_m_max_s0, -999999), IFNULL(m_m_max_s1, -999999), IFNULL(m_m_max_s2, -999999), IFNULL(m_m_max_s3, -999999), IFNULL(m_m_max_s4, -999999), IFNULL(m_m_max_s5, -999999), IFNULL(m_m_max_s6, -999999),
+  		 IFNULL(m_m_mess_cnt, 0)
+    FROM avg_monat_meteo_mv
+   WHERE m_m_jahr = akt_jahr and m_m_monat = akt_monat
+    INTO m_m_old_avg_s0, m_m_old_avg_s1, m_m_old_avg_s2, m_m_old_avg_s3, m_m_old_avg_s4, m_m_old_avg_s5, m_m_old_avg_s6,
+    	 m_m_old_sum_s0, m_m_old_sum_s1, m_m_old_sum_s2, m_m_old_sum_s3, m_m_old_sum_s4, m_m_old_sum_s5, m_m_old_sum_s6,
+    	 m_m_old_min_s0, m_m_old_min_s1, m_m_old_min_s2, m_m_old_min_s3, m_m_old_min_s4, m_m_old_min_s5, m_m_old_min_s6,
+    	 m_m_old_max_s0, m_m_old_max_s1, m_m_old_max_s2, m_m_old_max_s3, m_m_old_max_s4, m_m_old_max_s5, m_m_old_max_s6,
+    	 m_m_old_mess_cnt       
+  ;
+
+   SET m_m_new_sum_s0 = m_m_old_sum_s0 + NEW.W0;
+   SET m_m_new_sum_s1 = m_m_old_sum_s1 + NEW.W1;
+   SET m_m_new_sum_s2 = m_m_old_sum_s2 + NEW.W2;
+   SET m_m_new_sum_s3 = m_m_old_sum_s3 + NEW.W3;
+   SET m_m_new_sum_s4 = m_m_old_sum_s4 + NEW.W4;
+   SET m_m_new_sum_s5 = m_m_old_sum_s5 + NEW.W5;
+   SET m_m_new_sum_s6 = m_m_old_sum_s6 + NEW.W6;
+  
+   SET m_m_new_mess_cnt = m_m_old_mess_cnt + 1;
+  
+   SET m_m_new_avg_s0 = m_m_new_sum_s0 / m_m_new_mess_cnt;
+   SET m_m_new_avg_s1 = m_m_new_sum_s1 / m_m_new_mess_cnt;
+   SET m_m_new_avg_s2 = m_m_new_sum_s2 / m_m_new_mess_cnt;
+   SET m_m_new_avg_s3 = m_m_new_sum_s3 / m_m_new_mess_cnt;
+   SET m_m_new_avg_s4 = m_m_new_sum_s4 / m_m_new_mess_cnt;
+   SET m_m_new_avg_s5 = m_m_new_sum_s5 / m_m_new_mess_cnt;
+   SET m_m_new_avg_s6 = m_m_new_sum_s6 / m_m_new_mess_cnt;
+  
+   SET m_m_new_min_s0 = IF(NEW.W0 < m_m_old_min_s0,NEW.W0,m_m_old_min_s0);
+   SET m_m_new_min_s1 = IF(NEW.W1 < m_m_old_min_s1,NEW.W1,m_m_old_min_s1);
+   SET m_m_new_min_s2 = IF(NEW.W2 < m_m_old_min_s2,NEW.W2,m_m_old_min_s2);
+   SET m_m_new_min_s3 = IF(NEW.W3 < m_m_old_min_s3,NEW.W3,m_m_old_min_s3);
+   SET m_m_new_min_s4 = IF(NEW.W4 < m_m_old_min_s4,NEW.W4,m_m_old_min_s4);
+   SET m_m_new_min_s5 = IF(NEW.W5 < m_m_old_min_s5,NEW.W5,m_m_old_min_s5);
+   SET m_m_new_min_s6 = IF(NEW.W6 < m_m_old_min_s6,NEW.W6,m_m_old_min_s6);
+  
+   SET m_m_new_max_s0 = IF(NEW.W0 > m_m_old_max_s0,NEW.W0,m_m_old_max_s0);
+   SET m_m_new_max_s1 = IF(NEW.W1 > m_m_old_max_s1,NEW.W1,m_m_old_max_s1);
+   SET m_m_new_max_s2 = IF(NEW.W2 > m_m_old_max_s2,NEW.W2,m_m_old_max_s2);
+   SET m_m_new_max_s3 = IF(NEW.W3 > m_m_old_max_s3,NEW.W3,m_m_old_max_s3);
+   SET m_m_new_max_s4 = IF(NEW.W4 > m_m_old_max_s4,NEW.W4,m_m_old_max_s4);
+   SET m_m_new_max_s5 = IF(NEW.W5 > m_m_old_max_s5,NEW.W5,m_m_old_max_s5);
+   SET m_m_new_max_s6 = IF(NEW.W6 > m_m_old_max_s6,NEW.W6,m_m_old_max_s6);
+
+  REPLACE INTO avg_monat_meteo_mv
+  VALUES(akt_jahr,akt_monat,m_m_new_avg_s0, m_m_new_avg_s1,m_m_new_avg_s2,m_m_new_avg_s3,m_m_new_avg_s4,m_m_new_avg_s5,m_m_new_avg_s6, 
+  		 m_m_new_sum_s0, m_m_new_sum_s1,m_m_new_sum_s2,m_m_new_sum_s3,m_m_new_sum_s4,m_m_new_sum_s5,m_m_new_sum_s6,
+  		 m_m_new_min_s0, m_m_new_min_s1,m_m_new_min_s2,m_m_new_min_s3,m_m_new_min_s4,m_m_new_min_s5,m_m_new_min_s6,
+  		 m_m_new_max_s0, m_m_new_max_s1,m_m_new_max_s2,m_m_new_max_s3,m_m_new_max_s4,m_m_new_max_s5,m_m_new_max_s6,
+         m_m_new_mess_cnt);
+-- -------------------
+  SELECT IFNULL(m_t_avg_s0, 0), IFNULL(m_t_avg_s1, 0), IFNULL(m_t_avg_s2, 0), IFNULL(m_t_avg_s3, 0), IFNULL(m_t_avg_s4, 0), IFNULL(m_t_avg_s5, 0), IFNULL(m_t_avg_s6, 0),
+  		 IFNULL(m_t_sum_s0, 0), IFNULL(m_t_sum_s1, 0), IFNULL(m_t_sum_s2, 0), IFNULL(m_t_sum_s3, 0), IFNULL(m_t_sum_s4, 0), IFNULL(m_t_sum_s5, 0), IFNULL(m_t_sum_s6, 0),
+  		 IFNULL(m_t_min_s0, 999999), IFNULL(m_t_min_s1, 999999), IFNULL(m_t_min_s2, 999999), IFNULL(m_t_min_s3, 999999), IFNULL(m_t_min_s4, 999999), IFNULL(m_t_min_s5, 999999), IFNULL(m_t_min_s6, 999999),
+  		 IFNULL(m_t_max_s0, -999999), IFNULL(m_t_max_s1, -999999), IFNULL(m_t_max_s2, -999999), IFNULL(m_t_max_s3, -999999), IFNULL(m_t_max_s4, -999999), IFNULL(m_t_max_s5, -999999), IFNULL(m_t_max_s6, -999999),
+  		 IFNULL(m_t_mess_cnt, 0)
+    FROM avg_tag_meteo_mv
+   WHERE m_t_jahr = akt_jahr and m_t_monat = akt_monat and m_t_tag = akt_tag
+    INTO m_t_old_avg_s0, m_t_old_avg_s1, m_t_old_avg_s2, m_t_old_avg_s3, m_t_old_avg_s4, m_t_old_avg_s5, m_t_old_avg_s6,
+    	 m_t_old_sum_s0, m_t_old_sum_s1, m_t_old_sum_s2, m_t_old_sum_s3, m_t_old_sum_s4, m_t_old_sum_s5, m_t_old_sum_s6,
+    	 m_t_old_min_s0, m_t_old_min_s1, m_t_old_min_s2, m_t_old_min_s3, m_t_old_min_s4, m_t_old_min_s5, m_t_old_min_s6,
+    	 m_t_old_max_s0, m_t_old_max_s1, m_t_old_max_s2, m_t_old_max_s3, m_t_old_max_s4, m_t_old_max_s5, m_t_old_max_s6,
+    	 m_t_old_mess_cnt;
+
+   SET m_t_new_sum_s0 = m_t_old_sum_s0 + NEW.W0;
+   SET m_t_new_sum_s1 = m_t_old_sum_s1 + NEW.W1;
+   SET m_t_new_sum_s2 = m_t_old_sum_s2 + NEW.W2;
+   SET m_t_new_sum_s3 = m_t_old_sum_s3 + NEW.W3;
+   SET m_t_new_sum_s4 = m_t_old_sum_s4 + NEW.W4;
+   SET m_t_new_sum_s5 = m_t_old_sum_s5 + NEW.W5;
+   SET m_t_new_sum_s6 = m_t_old_sum_s6 + NEW.W6;
+  
+   SET m_t_new_mess_cnt = m_t_old_mess_cnt + 1;
+  
+   SET m_t_new_avg_s0 = m_t_new_sum_s0 / m_t_new_mess_cnt;
+   SET m_t_new_avg_s1 = m_t_new_sum_s1 / m_t_new_mess_cnt;
+   SET m_t_new_avg_s2 = m_t_new_sum_s2 / m_t_new_mess_cnt;
+   SET m_t_new_avg_s3 = m_t_new_sum_s3 / m_t_new_mess_cnt;
+   SET m_t_new_avg_s4 = m_t_new_sum_s4 / m_t_new_mess_cnt;
+   SET m_t_new_avg_s5 = m_t_new_sum_s5 / m_t_new_mess_cnt;
+   SET m_t_new_avg_s6 = m_t_new_sum_s6 / m_t_new_mess_cnt;
+  
+   SET m_t_new_min_s0 = IF(NEW.W0 < m_t_old_min_s0,NEW.W0,m_t_old_min_s0);
+   SET m_t_new_min_s1 = IF(NEW.W1 < m_t_old_min_s1,NEW.W1,m_t_old_min_s1);
+   SET m_t_new_min_s2 = IF(NEW.W2 < m_t_old_min_s2,NEW.W2,m_t_old_min_s2);
+   SET m_t_new_min_s3 = IF(NEW.W3 < m_t_old_min_s3,NEW.W3,m_t_old_min_s3);
+   SET m_t_new_min_s4 = IF(NEW.W4 < m_t_old_min_s4,NEW.W4,m_t_old_min_s4);
+   SET m_t_new_min_s5 = IF(NEW.W5 < m_t_old_min_s5,NEW.W5,m_t_old_min_s5);
+   SET m_t_new_min_s6 = IF(NEW.W6 < m_t_old_min_s6,NEW.W6,m_t_old_min_s6);
+  
+   SET m_t_new_max_s0 = IF(NEW.W0 > m_t_old_max_s0,NEW.W0,m_t_old_max_s0);
+   SET m_t_new_max_s1 = IF(NEW.W1 > m_t_old_max_s1,NEW.W1,m_t_old_max_s1);
+   SET m_t_new_max_s2 = IF(NEW.W2 > m_t_old_max_s2,NEW.W2,m_t_old_max_s2);
+   SET m_t_new_max_s3 = IF(NEW.W3 > m_t_old_max_s3,NEW.W3,m_t_old_max_s3);
+   SET m_t_new_max_s4 = IF(NEW.W4 > m_t_old_max_s4,NEW.W4,m_t_old_max_s4);
+   SET m_t_new_max_s5 = IF(NEW.W5 > m_t_old_max_s5,NEW.W5,m_t_old_max_s5);
+   SET m_t_new_max_s6 = IF(NEW.W6 > m_t_old_max_s6,NEW.W6,m_t_old_max_s6);
+
+  REPLACE INTO avg_tag_meteo_mv
+  VALUES(akt_jahr,akt_monat,akt_tag,m_t_new_avg_s0, m_t_new_avg_s1,m_t_new_avg_s2,m_t_new_avg_s3,m_t_new_avg_s4,m_t_new_avg_s5,m_t_new_avg_s6, 
+  		 m_t_new_sum_s0, m_t_new_sum_s1,m_t_new_sum_s2,m_t_new_sum_s3,m_t_new_sum_s4,m_t_new_sum_s5,m_t_new_sum_s6,
+  		 m_t_new_min_s0, m_t_new_min_s1,m_t_new_min_s2,m_t_new_min_s3,m_t_new_min_s4,m_t_new_min_s5,m_t_new_min_s6,
+  		 m_t_new_max_s0, m_t_new_max_s1,m_t_new_max_s2,m_t_new_max_s3,m_t_new_max_s4,m_t_new_max_s5,m_t_new_max_s6,
+         m_t_new_mess_cnt);
+
+-- -------------------
+
+
+END;
+$$
+
+DELIMITER ;

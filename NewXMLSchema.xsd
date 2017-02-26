@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.example.org/NewXMLSchema" xmlns:tns="http://www.example.org/NewXMLSchema" elementFormDefault="qualified">
+
+    <element name="EnergyFlow"
+    	type="tns:ComplexEnergyAspectTypeDesignedbyGroup6">
+    </element>
+    
+
+    <element name="SupplyData"
+    	type="tns:ComplexEnergyAspectTypeDesignedbyGroup6">
+    </element>
+    
+    <element name="DemandData"
+    	type="tns:ComplexEnergyAspectTypeDesignedbyGroup6">
+    </element>
+    
+    <element name="SensorNetworks"
+    	type="tns:ComplexEnergyAspectTypeDesignedbyGroup6">
+    </element>
+    
+    <element name="FlowNetworks"
+    	type="tns:ComplexEnergyAspectTypeDesignedbyGroup6">
+    </element>
+    
+    <element name="SensitizedObjects"
+    	type="tns:ComplexEnergyAspectTypeDesignedbyGroup6">
+    </element>
+    
+
+    <element name="EcoGoals"
+    	type="tns:ComplexEnergyAspectTypeDesignedbyGroup6">
+    </element>
+    
+    <element name="EnergyInformationSystems"
+    	type="tns:ComplexEnergyAspectTypeDesignedbyGroup6">
+    </element>
+    
+    <element name="EnergyDrivers"
+    	type="tns:ComplexEnergyAspectTypeDesignedbyGroup6">
+    </element>
+    
+    <element name="EnergyEfficiency"
+    	type="tns:ComplexEnergyAspectTypeDesignedbyGroup6">
+    </element>
+    
+    <element name="DataConstraints"
+    	type="tns:ComplexEnergyAspectTypeDesignedbyGroup6">
+    </element>
+    
+    <element name="FunctionConstraints"
+    	type="tns:ComplexEnergyAspectTypeDesignedbyGroup6">
+    </element>
+    
+    <complexType name="ComplexEnergyAspectTypeDesignedbyGroup6"></complexType>
+
+    <element name="HeaderEnergyData" type="string"></element>
+
+    <element name="NewElement" type="string"></element>
+
+</schema>

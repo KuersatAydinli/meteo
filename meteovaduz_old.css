@@ -1,0 +1,119 @@
+h1{color: green;font: 20px Verdana, Helvetica, sans-serif;}
+h2{color: red; font: 18px Verdana, Helvetica, sans-serif;}
+h3{color: blue; font: 16px Verdana, Helvetica, sans-serif;}
+#body{background-color:#3399FF;}
+P {font-family:Verdana;font-size:15pt;color:black;}
+A{text-decoration: underline;}
+
+A:link IMG, A:visited IMG {border: #6699FF;}
+
+body, table { 
+font: normal 100% Verdana, arial, helvetica, sans-serif; 
+color: black;
+} 
+
+
+
+.ntbtext {
+	font: 10px Verdana, Helvetica, sans-serif;
+	color: #666666;
+
+}
+
+.navitext {
+	font: 14px Verdana, Helvetica, sans-serif;
+	color:black;
+	
+
+}
+
+.formtabletext {
+	font: 12px Verdana, Helvetica, sans-serif;
+	color:black;
+
+}
+
+.einzelWerteText{
+	font: 12px Verdana, Helvetica, sans-serif;
+	color:black;
+
+}
+
+.FormInfoText{
+	font: 12px Verdana, Helvetica, sans-serif;
+	color:black;
+
+}
+
+.FormInfoText2 {
+	font: 10px Verdana, Helvetica, sans-serif;
+	color:black;
+
+}
+
+
+tr.spaceUnder > td {   padding-bottom: 11em; } 
+
+p.normal 
+{ 
+border-style: solid; 
+}
+
+p.padding1 
+{ 
+border-style: solid; 
+padding: 2cm 2cm 2cm 2cm; 
+}
+
+.sensInfo {
+	font: 12px Verdana, Helvetica, sans-serif;
+	color:black;
+
+}
+
+
+td.padding0 { padding: 0cm; }
+td.padding1 { padding: 0.3cm 0.3cm; } 
+td.padding2 { padding: 2cm; } 
+td.padding3 {padding: 0.5cm 2cm; } 
+td.padding4 {padding: 0.5cm 4cm;}
+
+h2 {
+padding:0px;
+margin:0px;
+}
+
+p {
+padding:0px;
+margin-top:0px;
+}
+
+.bodenGraphsTab{
+	font: 10px Verdana, Helvetica, sans-serif;
+}
+
+.mittelWerteTextTM{
+	font: 14px Verdana, Helvetica, sans-serif;
+    border: outset 5pt;
+    cellspacing=1;
+    border-collapse: separate;
+    border-spacing: 2px 2px;
+	float:left;
+}
+
+.warnings1 {
+font: 20px Verdana, Helvetica, sans-serif;
+}
+
+
+#linksTM {
+float:left;
+
+}
+#rechtsTM {
+float:right;
+
+}
+#mitteTM {
+
+}

@@ -1,0 +1,72 @@
+Hallo Cem,
+ 
+Ich habe die Testseite jetzt angeschaut. 
+ 
+A)     Wir können die Beschriftungen noch etwas aussagekräftiger machen. 
+ 
+Vorschläge:
+Statt „Windgeschwindigkeit“ besser „mittlere Windgeschwindigkeit“
+Statt „Lufttemperatur“ besser „Lufttemperatur im Schatten“
+Statt „Temperatur MWS 10“ besser „Lufttemperatur MWS 10“
+Statt „Luftdruck reduziert“ besser „Luftdruck auf Meereshöhe“ 
+Statt „Barometrischer Luftdruck“ besser „Luftdruck auf Stationshöhe“
+=>DONE
+ 
+B)     Wenn ich beispielsweise auf das Diagramm mit der Windgeschwindigkeit klicke, kommt nur eine Kurve (mittlere Windgeschwindigkeit)
+ 
+C)     Kannst du bitte bei allen Plots nur eine Y-Achse verwenden? Sonst hat man in der Eile den Eindruck, dass die mittlere Windgeschwindigkeit höher sein kann als die Windspitze, was natürlich nicht stimmt. Wenn es geht mit einer einzigen Achse, wäre das aus meiner Sicht eine Verbesserung.
+=>DONE
+
+ 
+D)     Einige Linien sind „pfeifengerade“, hier werden keine aktuellen Werte eingelesen
+=> RESET-Problem --> gelöst per SW-Reeset: {01!*<crlf> 
+
+ 
+E)     Was meinst du unter „Informationen“ bei der Identifikation 11 mit „Lufttemperatur Dach“ und bei 12 mit „Temperatur innerhalb MWS 10“? gibt es total also drei Lufttemperaturwerte?
+Ja anscheinnd misst die MWS10 nebt dem Lufttemperatur noch seine eigene interne Betriebstemperatur
+ 
+F)      Reiter Informationen: Identifikation 1: Bitte „Luftdruck reduziert“ ebenfalls auf „Luftdruck auf Meereshöhe“ angleichen“. Hier dann allenfalls die Bemerkung streichen (sie stimmt ja nicht, weil die Korrektur von -4 gefehlt hat). Müssen wir hier dann zusätzlich den „Luftdruck auf Stationshöhe“ ergänzen“
+=> DONE
+ 
+G)     Dafür brauchen wir wohl bei Identifikation 1 eine Bemerkung, z.B. „separate Messung im Schatten“
+ 
+H)     Die „Temperatur MWS10“ steht bei -40 °C still. Da ist etwas faul im Staate Dänemark J
+=>DONE siehe Reset-Problem
+
+---------
+
+I)		EInzelwerte-Grafik bei Boden 100 cm --> Abfrage war ungültig!Unknown column 'W10' in 'field list'
+=> DONE
+--------------------------------------------
+01.01.2017:
+
+Bei den „aktuellen Messwerten“ müsstest du jetzt aber wieder „Luftdruck auf Stationshöhe“ durch „Luftdruck auf Meereshöhe“ ersetzen. Der Luftdruck auf Stationshöhe ist meist unter 1000 hPa, der auf Meereshöhe darüber.
+
+Entsprechend müssen wir bei den „Grafischen Darstellungen der Luftwerte“ die Legenden anpassen: Rot = Luftdruck auf Stationshöhe, Grün = Luftdruck auf Meereshöhe
+
+Cem=> Einfach tauschen? Ereledigt! 
+ 
+Zur „Regenmenge“ habe ich ein Frage: Ist die „Regenmenge“ die „aufsummierte Regenmenge“ und bei der „Regenmenge pro Speicherintervall“ das Intervall genauer definiert? Also z.B. 10 Minuten oder so?
+Cem=> Regenmenge ist die Summe eines Tages. 
+Zum aderen Wert:  EIgentlich müsste es wie folgt heissen: Mittelere Regenmenge in der letzten 10 Minute --> Also: ich messe die Menge von MInute zu Minute. Nach 10 Minuten bilde ich den Mittwelert der minütigen Regenmengewerte
+Ev. könnte man ev. auch die Minutenwerte zusammenzähle der letzten 10 Minutre??Weiss nicht was besser bzw. aussagkräftiger ist.
+ 
+Unter „Informationen“: Stimmen die Angaben unter „Messung der Sensorwerte“ noch???
+ 
+               Dann ein paar sprachliche und formale Kleinigkeiten:
+ 
+Unter „Informationen“ bei „Identifikation 0“ bitte folgende sprachliche Korrektur anbringen: Separate Messung im Schatten mit einem MWS 5 Temperatursensor. Zwischen MWS und 5 einen Leerschlag einbauen, also MWS 5 statt MWS5
+Unter „Informationen“ bei „Identifikation 11“ bitte „Lufttemperatur bei der MWS 10 auf dem Dach“
+Unter „Informationen“ bei „Identifikation 12“: Abstand zwischen MWS und 10, also MWS 10 statt MWS10
+Unter „Informationen“ bei „Identifikation 14“: … bzw. der letzten 10-minütigen Höchstwerte
+Unter „Informationen“ bei „Identifikation 16“: Speicherintervall … und: Durchschnitt der minütigen Regenmenge
+Unter „Informationen“ bei „Identifikation 17“: MWS 10 statt MWS10
+Cem=> Ereledigt 
+ 
+Bei den „Mittelwerten“: Lufttemperatur im Schatten. Wir haben ja immer diese Werte genommen, also lassen wir auch diese weiterhin
+Bei den „Mittelwerten“: sollen wir neu die Windspitzen ergänzen?
+--------
+Farbe der Plots
+Kannst du die Farben bei den Plots so machen, dass wenn man auf den Plot klickt, die entsprechende Farbe kommt?
+Also wenn zwei Linien in grün und rot dargestellt sind und man klickt drauf, dann nicht blau kommt, sondern entweder grün und rot, was es halt dann ist? Das wäre auch eine gute Verbesserung!
+ 

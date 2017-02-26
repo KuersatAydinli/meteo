@@ -1,0 +1,248 @@
+DELIMITER $$
+
+CREATE TRIGGER messwerte_jmt_ins
+AFTER INSERT ON messwerte
+FOR EACH ROW
+BEGIN
+
+  SET @old_avg_s0 = 0;
+  SET @old_avg_s1 = 0;
+  SET @old_avg_s2 = 0;
+  SET @old_avg_s3 = 0;
+  SET @old_avg_s4 = 0;
+  SET @old_avg_s5 = 0;
+  SET @old_avg_s6 = 0;
+  SET @old_sum_s0 = 0;
+  SET @old_sum_s1 = 0;
+  SET @old_sum_s2 = 0;
+  SET @old_sum_s3 = 0;
+  SET @old_sum_s4 = 0;
+  SET @old_sum_s5 = 0;
+  SET @old_sum_s6 = 0;
+  SET @old_min_s0 = 0;
+  SET @old_min_s1 = 0;
+  SET @old_min_s2 = 0;
+  SET @old_min_s3 = 0;
+  SET @old_min_s4 = 0;
+  SET @old_min_s5 = 0;
+  SET @old_min_s6 = 0;
+  SET @old_max_s0 = 0;
+  SET @old_max_s1 = 0;
+  SET @old_max_s2 = 0;
+  SET @old_max_s3 = 0;
+  SET @old_max_s4 = 0;
+  SET @old_max_s5 = 0;
+  SET @old_max_s6 = 0;  
+  SET @old_mess_cnt = 0;
+  
+
+  SET @new_avg_s0 = 0;
+  SET @new_avg_s1 = 0;
+  SET @new_avg_s2 = 0;
+  SET @new_avg_s3 = 0;
+  SET @new_avg_s4 = 0;
+  SET @new_avg_s5 = 0;
+  SET @new_avg_s6 = 0;
+  SET @new_sum_s0 = 0;
+  SET @new_sum_s1 = 0;
+  SET @new_sum_s2 = 0;
+  SET @new_sum_s3 = 0;
+  SET @new_sum_s4 = 0;
+  SET @new_sum_s5 = 0;
+  SET @new_sum_s6 = 0;
+  SET @new_min_s0 = 0;
+  SET @new_min_s1 = 0;
+  SET @new_min_s2 = 0;
+  SET @new_min_s3 = 0;
+  SET @new_min_s4 = 0;
+  SET @new_min_s5 = 0;
+  SET @new_min_s6 = 0;
+  SET @new_max_s0 = 0;
+  SET @new_max_s1 = 0;
+  SET @new_max_s2 = 0;
+  SET @new_max_s3 = 0;
+  SET @new_max_s4 = 0;
+  SET @new_max_s5 = 0;
+  SET @new_max_s6 = 0;  
+  SET @new_mess_cnt = 0;
+
+  SET @akt_timestamp = NEW.Messzeit;
+  SET @akt_jahr = YEAR(@akt_timestamp);
+  SET @akt_monat = MONTH(@akt_timestamp);
+  SET @akt_tag = DAY(@akt_timestamp);
+
+-- -------------------------------------------------
+
+  SELECT IFNULL(avg_s0, 0), IFNULL(avg_s1, 0), IFNULL(avg_s2, 0), IFNULL(avg_s3, 0), IFNULL(avg_s4, 0), IFNULL(avg_s5, 0), IFNULL(avg_s6, 0),
+  		 IFNULL(sum_s0, 0), IFNULL(sum_s1, 0), IFNULL(sum_s2, 0), IFNULL(sum_s3, 0), IFNULL(sum_s4, 0), IFNULL(sum_s5, 0), IFNULL(sum_s6, 0),
+  		 IFNULL(min_s0, 0), IFNULL(min_s1, 0), IFNULL(min_s2, 0), IFNULL(min_s3, 0), IFNULL(min_s4, 0), IFNULL(min_s5, 0), IFNULL(min_s6, 0),
+  		 IFNULL(max_s0, 0), IFNULL(max_s1, 0), IFNULL(max_s2, 0), IFNULL(max_s3, 0), IFNULL(max_s4, 0), IFNULL(max_s5, 0), IFNULL(max_s6, 0),
+  		 IFNULL(mess_cnt, 0)
+    FROM avg_jahr_meteo_mv
+   WHERE jahr = @akt_jahr
+    INTO @old_avg_s0, @old_avg_s1, @old_avg_s2, @old_avg_s3, @old_avg_s4, @old_avg_s5, @old_avg_s6,
+    	 @old_sum_s0, @old_sum_s1, @old_sum_s2, @old_sum_s3, @old_sum_s4, @old_sum_s5, @old_sum_s6,
+    	 @old_min_s0, @old_min_s1, @old_min_s2, @old_min_s3, @old_min_s4, @old_min_s5, @old_min_s6,
+    	 @old_max_s0, @old_max_s1, @old_max_s2, @old_max_s3, @old_max_s4, @old_max_s5, @old_max_s6,
+    	 @old_mess_cnt       
+  ;
+
+   @new_sum_s0 = @old_sum_s0 + NEW.W0;
+   @new_sum_s1 = @old_sum_s1 + NEW.W1;
+   @new_sum_s2 = @old_sum_s2 + NEW.W2;
+   @new_sum_s3 = @old_sum_s3 + NEW.W3;
+   @new_sum_s4 = @old_sum_s4 + NEW.W4;
+   @new_sum_s5 = @old_sum_s5 + NEW.W5;
+   @new_sum_s6 = @old_sum_s6 + NEW.W6;
+  
+   @new_mess_cnt = @old_mess_cnt + 1;
+  
+   @new_avg_s0 = @new_sum_s0 / @new_mess_cnt;
+   @new_avg_s1 = @new_sum_s1 / @new_mess_cnt;
+   @new_avg_s2 = @new_sum_s2 / @new_mess_cnt;
+   @new_avg_s3 = @new_sum_s3 / @new_mess_cnt;
+   @new_avg_s4 = @new_sum_s4 / @new_mess_cnt;
+   @new_avg_s5 = @new_sum_s5 / @new_mess_cnt;
+   @new_avg_s6 = @new_sum_s6 / @new_mess_cnt;
+  
+   @new_min_s0 = IF(NEW.W0 < @old_min_s0,NEW.W0,@old_min_s0);
+   @new_min_s1 = IF(NEW.W1 < @old_min_s1,NEW.W0,@old_min_s1);
+   @new_min_s2 = IF(NEW.W2 < @old_min_s2,NEW.W0,@old_min_s2);
+   @new_min_s3 = IF(NEW.W3 < @old_min_s3,NEW.W0,@old_min_s3);
+   @new_min_s4 = IF(NEW.W4 < @old_min_s4,NEW.W0,@old_min_s4);
+   @new_min_s5 = IF(NEW.W5 < @old_min_s5,NEW.W0,@old_min_s5);
+   @new_min_s6 = IF(NEW.W6 < @old_min_s6,NEW.W0,@old_min_s6);
+  
+   @new_max_s0 = IF(NEW.W0 > @old_max_s0,NEW.W0,@old_max_s0);
+   @new_max_s1 = IF(NEW.W1 > @old_max_s1,NEW.W0,@old_max_s1);
+   @new_max_s2 = IF(NEW.W2 > @old_max_s2,NEW.W0,@old_max_s2);
+   @new_max_s3 = IF(NEW.W3 > @old_max_s3,NEW.W0,@old_max_s3);
+   @new_max_s4 = IF(NEW.W4 > @old_max_s4,NEW.W0,@old_max_s4);
+   @new_max_s5 = IF(NEW.W5 > @old_max_s5,NEW.W0,@old_max_s5);
+   @new_max_s6 = IF(NEW.W6 > @old_max_s6,NEW.W0,@old_max_s6);
+
+
+  REPLACE INTO avg_jahr_meteo_mv
+  VALUES(@akt_jahr,@new_avg_s0, @new_avg_s1,@new_avg_s2,@new_avg_s3,@new_avg_s4,@new_avg_s5,@new_avg_s6, 
+  		 @new_sum_s0, @new_sum_s1,@new_sum_s2,@new_sum_s3,@new_sum_s4,@new_sum_s5,@new_sum_s6,
+  		 @new_min_s0, @new_min_s1,@new_min_s2,@new_min_s3,@new_min_s4,@new_min_s5,@new_min_s6,
+  		 @new_max_s0, @new_max_s1,@new_max_s2,@new_max_s3,@new_max_s4,@new_max_s5,@new_max_s6,
+         @new_mess_cnt);
+-- ---------------
+
+  SELECT IFNULL(avg_s0, 0), IFNULL(avg_s1, 0), IFNULL(avg_s2, 0), IFNULL(avg_s3, 0), IFNULL(avg_s4, 0), IFNULL(avg_s5, 0), IFNULL(avg_s6, 0),
+  		 IFNULL(sum_s0, 0), IFNULL(sum_s1, 0), IFNULL(sum_s2, 0), IFNULL(sum_s3, 0), IFNULL(sum_s4, 0), IFNULL(sum_s5, 0), IFNULL(sum_s6, 0),
+  		 IFNULL(min_s0, 0), IFNULL(min_s1, 0), IFNULL(min_s2, 0), IFNULL(min_s3, 0), IFNULL(min_s4, 0), IFNULL(min_s5, 0), IFNULL(min_s6, 0),
+  		 IFNULL(max_s0, 0), IFNULL(max_s1, 0), IFNULL(max_s2, 0), IFNULL(max_s3, 0), IFNULL(max_s4, 0), IFNULL(max_s5, 0), IFNULL(max_s6, 0),
+  		 IFNULL(mess_cnt, 0)
+    FROM avg_monat_meteo_mv
+   WHERE jahr = @akt_jahr and monat = @akt_monat
+    INTO @old_avg_s0, @old_avg_s1, @old_avg_s2, @old_avg_s3, @old_avg_s4, @old_avg_s5, @old_avg_s6,
+    	 @old_sum_s0, @old_sum_s1, @old_sum_s2, @old_sum_s3, @old_sum_s4, @old_sum_s5, @old_sum_s6,
+    	 @old_min_s0, @old_min_s1, @old_min_s2, @old_min_s3, @old_min_s4, @old_min_s5, @old_min_s6,
+    	 @old_max_s0, @old_max_s1, @old_max_s2, @old_max_s3, @old_max_s4, @old_max_s5, @old_max_s6,
+    	 @old_mess_cnt       
+  ;
+
+   @new_sum_s0 = @old_sum_s0 + NEW.W0;
+   @new_sum_s1 = @old_sum_s1 + NEW.W1;
+   @new_sum_s2 = @old_sum_s2 + NEW.W2;
+   @new_sum_s3 = @old_sum_s3 + NEW.W3;
+   @new_sum_s4 = @old_sum_s4 + NEW.W4;
+   @new_sum_s5 = @old_sum_s5 + NEW.W5;
+   @new_sum_s6 = @old_sum_s6 + NEW.W6;
+  
+   @new_mess_cnt = @old_mess_cnt + 1;
+  
+   @new_avg_s0 = @new_sum_s0 / @new_mess_cnt;
+   @new_avg_s1 = @new_sum_s1 / @new_mess_cnt;
+   @new_avg_s2 = @new_sum_s2 / @new_mess_cnt;
+   @new_avg_s3 = @new_sum_s3 / @new_mess_cnt;
+   @new_avg_s4 = @new_sum_s4 / @new_mess_cnt;
+   @new_avg_s5 = @new_sum_s5 / @new_mess_cnt;
+   @new_avg_s6 = @new_sum_s6 / @new_mess_cnt;
+  
+   @new_min_s0 = IF(NEW.W0 < @old_min_s0,NEW.W0,@old_min_s0);
+   @new_min_s1 = IF(NEW.W1 < @old_min_s1,NEW.W0,@old_min_s1);
+   @new_min_s2 = IF(NEW.W2 < @old_min_s2,NEW.W0,@old_min_s2);
+   @new_min_s3 = IF(NEW.W3 < @old_min_s3,NEW.W0,@old_min_s3);
+   @new_min_s4 = IF(NEW.W4 < @old_min_s4,NEW.W0,@old_min_s4);
+   @new_min_s5 = IF(NEW.W5 < @old_min_s5,NEW.W0,@old_min_s5);
+   @new_min_s6 = IF(NEW.W6 < @old_min_s6,NEW.W0,@old_min_s6);
+  
+   @new_max_s0 = IF(NEW.W0 > @old_max_s0,NEW.W0,@old_max_s0);
+   @new_max_s1 = IF(NEW.W1 > @old_max_s1,NEW.W0,@old_max_s1);
+   @new_max_s2 = IF(NEW.W2 > @old_max_s2,NEW.W0,@old_max_s2);
+   @new_max_s3 = IF(NEW.W3 > @old_max_s3,NEW.W0,@old_max_s3);
+   @new_max_s4 = IF(NEW.W4 > @old_max_s4,NEW.W0,@old_max_s4);
+   @new_max_s5 = IF(NEW.W5 > @old_max_s5,NEW.W0,@old_max_s5);
+   @new_max_s6 = IF(NEW.W6 > @old_max_s6,NEW.W0,@old_max_s6);
+
+  REPLACE INTO avg_monat_meteo_mv
+  VALUES(@akt_jahr,@akt_monat,@new_avg_s0, @new_avg_s1,@new_avg_s2,@new_avg_s3,@new_avg_s4,@new_avg_s5,@new_avg_s6, 
+  		 @new_sum_s0, @new_sum_s1,@new_sum_s2,@new_sum_s3,@new_sum_s4,@new_sum_s5,@new_sum_s6,
+  		 @new_min_s0, @new_min_s1,@new_min_s2,@new_min_s3,@new_min_s4,@new_min_s5,@new_min_s6,
+  		 @new_max_s0, @new_max_s1,@new_max_s2,@new_max_s3,@new_max_s4,@new_max_s5,@new_max_s6,
+         @new_mess_cnt);
+-- -------------------
+  SELECT IFNULL(avg_s0, 0), IFNULL(avg_s1, 0), IFNULL(avg_s2, 0), IFNULL(avg_s3, 0), IFNULL(avg_s4, 0), IFNULL(avg_s5, 0), IFNULL(avg_s6, 0),
+  		 IFNULL(sum_s0, 0), IFNULL(sum_s1, 0), IFNULL(sum_s2, 0), IFNULL(sum_s3, 0), IFNULL(sum_s4, 0), IFNULL(sum_s5, 0), IFNULL(sum_s6, 0),
+  		 IFNULL(min_s0, 0), IFNULL(min_s1, 0), IFNULL(min_s2, 0), IFNULL(min_s3, 0), IFNULL(min_s4, 0), IFNULL(min_s5, 0), IFNULL(min_s6, 0),
+  		 IFNULL(max_s0, 0), IFNULL(max_s1, 0), IFNULL(max_s2, 0), IFNULL(max_s3, 0), IFNULL(max_s4, 0), IFNULL(max_s5, 0), IFNULL(max_s6, 0),
+  		 IFNULL(mess_cnt, 0)
+    FROM avg_tag_meteo_mv
+   WHERE jahr = @akt_jahr and monat = @akt_monat and tag = @akt_tag
+    INTO @old_avg_s0, @old_avg_s1, @old_avg_s2, @old_avg_s3, @old_avg_s4, @old_avg_s5, @old_avg_s6,
+    	 @old_sum_s0, @old_sum_s1, @old_sum_s2, @old_sum_s3, @old_sum_s4, @old_sum_s5, @old_sum_s6,
+    	 @old_min_s0, @old_min_s1, @old_min_s2, @old_min_s3, @old_min_s4, @old_min_s5, @old_min_s6,
+    	 @old_max_s0, @old_max_s1, @old_max_s2, @old_max_s3, @old_max_s4, @old_max_s5, @old_max_s6,
+    	 @old_mess_cnt;
+
+   @new_sum_s0 = @old_sum_s0 + NEW.W0;
+   @new_sum_s1 = @old_sum_s1 + NEW.W1;
+   @new_sum_s2 = @old_sum_s2 + NEW.W2;
+   @new_sum_s3 = @old_sum_s3 + NEW.W3;
+   @new_sum_s4 = @old_sum_s4 + NEW.W4;
+   @new_sum_s5 = @old_sum_s5 + NEW.W5;
+   @new_sum_s6 = @old_sum_s6 + NEW.W6;
+  
+   @new_mess_cnt = @old_mess_cnt + 1;
+  
+   @new_avg_s0 = @new_sum_s0 / @new_mess_cnt;
+   @new_avg_s1 = @new_sum_s1 / @new_mess_cnt;
+   @new_avg_s2 = @new_sum_s2 / @new_mess_cnt;
+   @new_avg_s3 = @new_sum_s3 / @new_mess_cnt;
+   @new_avg_s4 = @new_sum_s4 / @new_mess_cnt;
+   @new_avg_s5 = @new_sum_s5 / @new_mess_cnt;
+   @new_avg_s6 = @new_sum_s6 / @new_mess_cnt;
+  
+   @new_min_s0 = IF(NEW.W0 < @old_min_s0,NEW.W0,@old_min_s0);
+   @new_min_s1 = IF(NEW.W1 < @old_min_s1,NEW.W0,@old_min_s1);
+   @new_min_s2 = IF(NEW.W2 < @old_min_s2,NEW.W0,@old_min_s2);
+   @new_min_s3 = IF(NEW.W3 < @old_min_s3,NEW.W0,@old_min_s3);
+   @new_min_s4 = IF(NEW.W4 < @old_min_s4,NEW.W0,@old_min_s4);
+   @new_min_s5 = IF(NEW.W5 < @old_min_s5,NEW.W0,@old_min_s5);
+   @new_min_s6 = IF(NEW.W6 < @old_min_s6,NEW.W0,@old_min_s6);
+  
+   @new_max_s0 = IF(NEW.W0 > @old_max_s0,NEW.W0,@old_max_s0);
+   @new_max_s1 = IF(NEW.W1 > @old_max_s1,NEW.W0,@old_max_s1);
+   @new_max_s2 = IF(NEW.W2 > @old_max_s2,NEW.W0,@old_max_s2);
+   @new_max_s3 = IF(NEW.W3 > @old_max_s3,NEW.W0,@old_max_s3);
+   @new_max_s4 = IF(NEW.W4 > @old_max_s4,NEW.W0,@old_max_s4);
+   @new_max_s5 = IF(NEW.W5 > @old_max_s5,NEW.W0,@old_max_s5);
+   @new_max_s6 = IF(NEW.W6 > @old_max_s6,NEW.W0,@old_max_s6);
+
+  REPLACE INTO avg_tag_meteo_mv
+  VALUES(@akt_jahr,@akt_monat,@akt_tag,@new_avg_s0, @new_avg_s1,@new_avg_s2,@new_avg_s3,@new_avg_s4,@new_avg_s5,@new_avg_s6, 
+  		 @new_sum_s0, @new_sum_s1,@new_sum_s2,@new_sum_s3,@new_sum_s4,@new_sum_s5,@new_sum_s6,
+  		 @new_min_s0, @new_min_s1,@new_min_s2,@new_min_s3,@new_min_s4,@new_min_s5,@new_min_s6,
+  		 @new_max_s0, @new_max_s1,@new_max_s2,@new_max_s3,@new_max_s4,@new_max_s5,@new_max_s6,
+         @new_mess_cnt);
+
+-- -------------------
+
+
+END;
+$$
+
+DELIMITER ;

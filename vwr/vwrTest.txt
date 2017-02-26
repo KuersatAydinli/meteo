@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+<wetterring-template>
+
+    <update>
+        <datum>14.02.2015</datum>
+        <zeit>21:30</zeit>
+    </update>
+
+    <temperatur>
+        <aktuell>7,6</aktuell>
+        <tag-min>5,8</tag-min>
+        <tag-max>13,0</tag-max>
+        <tag-min-zeit>02:20</tag-min-zeit>
+        <tag-max-zeit>16:00</tag-max-zeit>
+        <monat-min>-8,4</monat-min>
+        <monat-max>2,5</monat-max>
+        <jahr-min>-10,0</jahr-min>
+        <jahr-max>15,1</jahr-max>
+    </temperatur>
+    
+    <taupunkt>
+        <aktuell>{}</aktuell>
+    </taupunkt>
+    
+    <luftdruck>
+        <aktuell>1001</aktuell>
+        <tag-min>998</tag-min>
+        <tag-max>1004</tag-max>
+        <tag-min-zeit>16:50</tag-min-zeit>
+        <tag-max-zeit>01:10</tag-max-zeit>
+        <tendenz>---</tendenz>
+    </luftdruck>
+    
+    <luftfeuchtigkeit>
+        <aktuell>83</aktuell>
+        <tag-min>45</tag-min>
+        <tag-max>84</tag-max>
+        <tag-min-zeit>15:10</tag-min-zeit>
+        <tag-max-zeit>01:30</tag-max-zeit>
+    </luftfeuchtigkeit>
+    
+    <regen>
+        <rate>0,0</rate>
+        <tag>0,0</tag>
+        <monat>{}</monat>
+        <jahr>{}</jahr>
+    </regen>
+    
+    <wind>
+        <geschwindigkeit>
+        	<aktuell-Windboeen>{}</aktuell-Windboeen>
+        	<aktuell-Wind>7,3</aktuell-Wind>
+        	<tag-max>16,0</tag-max>
+        	<tag-max-zeit>17:10</tag-max-zeit>
+        	<monat-max>{}</monat-max>
+        	<jahr-max>{}</jahr-max>
+        	<durchschnitt>7,3</durchschnitt>
+        </geschwindigkeit>
+        <richtung>NNO</richtung>
+    </wind>
+    
+    <sonne>
+        <sonnenstunden>{}</sonnenstunden>
+        <watt-aktuell>{}</watt-aktuell>
+    </sonne>
+    
+</wetterring-template>

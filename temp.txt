@@ -1,0 +1,18 @@
+./index.php?sNavigationsSeite=einzelnegrafik&fromIndex=yes&ESensor=W7&ETitel=Bodentemperatur5&kFarbe=black&refLinie=0&iXBezIntervallWert=6&oZeitIntervall=6
+./index.php?sNavigationsSeite=einzelnegrafik&fromIndex=yes&ESensor=W8&ETitel=Bodentemperatur10&kFarbe=black&refLinie=0&iXBezIntervallWert=6&oZeitIntervall=6
+
+
+
+SELECT w0 as Temp, NULL as b5 , NULL as b10 , NULL as b50,Null as b100
+FROM `messwerte` AS t
+WHERE 1 
+UNION ALL 
+SELECT null as Temp,w0 as b5, w1 as b10, w2 as b50, w3 as b100
+FROM `bodenmesswerte` AS b
+WHERE 1 
+LIMIT 540870 , 30
+
+
+
+
+SELECT * FROM `bodenmesswerte` where messzeit between '2011-09-16 19:00:42' and '2011-09-19 19:00:42'
