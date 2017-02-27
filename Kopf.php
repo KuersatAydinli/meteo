@@ -1,6 +1,4 @@
 <table border="0" cellspacing="0" width="100%" style="table-layout:fixed" height="20%">
-
- 
  <tr class="headtext">
 	<td class="padding0" width="12%" height="20%" > <a  href='http://globe.gov/' target='_blank'> <img width="100%" height="100%" border="0" src='./kopf_blau_LG_Globe.png' >  </a> </td>		
 	<td class="padding0" width="50%" height="20%" > <a  href='http://www.lg-vaduz.li' target='_blank'> <img width="100%" height="100%" border="0" src='./kopf_blau_LG_Man.png' >  </a> </td>

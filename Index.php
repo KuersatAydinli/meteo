@@ -1,5 +1,4 @@
 <?
-
 //F�r Debug-Zwecke diese globale Variable einschalten
 $bGlobalDebug = false;
 //$bGlobalDebug = true;
@@ -8,11 +7,6 @@ if($bGlobalDebug){
 	echo "Bildschirmbreite von Index aus: ".$_GET['iBrowserFensterBreite'];
 	echo "iBrowserFensterHoehe von Index aus: ".$_GET['iBrowserFensterHoehe'];
 }
-
-
-
-
-
 ?>
 
 <html>
@@ -72,7 +66,6 @@ header("Pragma: no-cache"); // HTTP/1.0
 <?php 
 //$url = $_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
 //echo urldecode($url);
- 
 ?>
 
 

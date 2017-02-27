@@ -29,13 +29,13 @@ Darstellung</a>&nbsp;&nbsp;&nbsp;
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#"><img src="img/logo.png" height=30 width=41></a>
+            <a class="navbar-brand" href="#"><img src="kopf_blau_LG_Gym.png" height=30 width=41></a>
         </div>
         <div id="navbar" class="navbar-collapse collapse col-sm-5">
             <ul class="nav navbar-nav">
-                <li class="active"><a id="a_aktuellewerte" href="./index.php?sNavigationsSeite=aktuellewerte&iXBezIntervallWert=6">Aktuelle Messwerte</a></li>
-                <li><a id="a_allegrafik" href="./index.php?sNavigationsSeite=allegrafik&iXBezIntervallWert=6">Grafische Darstellung Luftwerte</a></li>
-                <li><a id="a_allegrafikBoden" href="./index.php?sNavigationsSeite=allegrafikBoden&iXBezIntervallWert=6">Grafische Darstellung Bodenwerte</a></li>
+                <li class="active"><a id="a_aktuellewerte" href="./Index.php?sNavigationsSeite=aktuellewerte&iXBezIntervallWert=6">Aktuelle Messwerte</a></li>
+                <li><a id="a_allegrafik" href="./Index.php?sNavigationsSeite=allegrafik&iXBezIntervallWert=6">Grafische Darstellung Luftwerte</a></li>
+                <li><a id="a_allegrafikBoden" href="./Index.php?sNavigationsSeite=allegrafikBoden&iXBezIntervallWert=6">Grafische Darstellung Bodenwerte</a></li>
                 <li><a href="contactus.html"><i class="fa fa-envelope-o"></i> Contact</a></li>
             </ul>
         </div>
