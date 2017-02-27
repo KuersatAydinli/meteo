@@ -2,7 +2,6 @@
 
 
 if (isset($_GET['sNavigationsSeite'])) {
-
 	if($_GET['sNavigationsSeite']=="datenexport"){
 		include('./DatenExport.php');
 	}else if($_GET['sNavigationsSeite']=="aktuellewerte"){
