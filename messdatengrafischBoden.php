@@ -3,7 +3,7 @@
 
 <?
 	$sNavigationsQuelle = "allegrafikBoden";
-	$sSchaltflächenBeschriftung = "Aktualisieren";
+	$sSchaltflÃ¤chenBeschriftung = "Aktualisieren";
 	include('./Formular.php');
 ?>
 
@@ -76,19 +76,19 @@ $sURLSensor = "*";
 	//////////////////////////////////////////////////
 		 // Variable deklarieren 
 		 $dir = "./kurven/"; 
-		 // Variable deklarieren und Verzeichnis öffnen 
+		 // Variable deklarieren und Verzeichnis ï¿½ffnen 
 		 $verz = opendir($dir); 
 		 // Verzeichnisinhalt auslesen 
 		 while ($file = readdir ($verz))  
 		 { 
-		  // "." und ".." bei der Ausgabe unterdrücken 
+		  // "." und ".." bei der Ausgabe unterdrï¿½cken 
 		  if($file != "." && $file != "..")  
 		  { 
-		   // File löschen 
+		   // File lï¿½schen 
 		   @unlink($dir.$file); 
 		  } 
 		 } 
-		// Verzeichnis schließen 
+		// Verzeichnis schlieï¿½en 
 		closedir($verz);  
 	//////////////////////////////////////////////////
 
@@ -116,9 +116,9 @@ $iBild
     </td>
     
 		<td class="bodenGraphsTab" valign="bottom">
-			<?echo "<a href='#' onClick='wechsleZuBisDat()'> Zeitpunkt: $sKonBisDatum (veränderbar) </a>"; ?>
+			<?echo "<a href='#' onClick='wechsleZuBisDat()'> Zeitpunkt: $sKonBisDatum (verï¿½nderbar) </a>"; ?>
 			<?echo "<br>"?>
-			<?echo "Lufttemperatur: ".$oSensorYLuftTempWert." °C\n";?>
+			<?echo "Lufttemperatur: ".$oSensorYLuftTempWert." ï¿½C\n";?>
 			<?echo "<br>"?>		
 			<?echo "Bodentemperaturen:";?>
 			
@@ -127,10 +127,10 @@ $iBild
   </tr>																											   
   <tr>
 		<td align="right" valign="bottom" >
-			<?//echo "<a href='./index.php?sNavigationsSeite=einzelnegrafik&bSelbstAufruf=yes&sFrmVonDatum=$sKonVonDatum&sFrmBisDatum=$sKonBisDatum&ESensor=W0&ETitel=Temperatur%20in%20°C&kFarbe=red&iBrowserFensterBreite=".$_GET['iBrowserFensterBreite']."&iBrowserFensterHoehe=".$_GET['iBrowserFensterHoehe']."&iXBezIntervallWert=".$iXBezIntervallWert."&oZeitIntervall=".$oZeitIntervall." target='_blank'>";?>		
+			<?//echo "<a href='./index.php?sNavigationsSeite=einzelnegrafik&bSelbstAufruf=yes&sFrmVonDatum=$sKonVonDatum&sFrmBisDatum=$sKonBisDatum&ESensor=W0&ETitel=Temperatur%20in%20ï¿½C&kFarbe=red&iBrowserFensterBreite=".$_GET['iBrowserFensterBreite']."&iBrowserFensterHoehe=".$_GET['iBrowserFensterHoehe']."&iXBezIntervallWert=".$iXBezIntervallWert."&oZeitIntervall=".$oZeitIntervall." target='_blank'>";?>		
 			<? //echo "<img border='0' src='./kurven/kurve1"."_".$iAktuelleZeit.".png?".$iAktuelleZeit."' width=$iBildBreiteProf height=$iBildHoeheProf'>"?>
 			<? //echo "<img border='0' src='./kurven/kurve1"."_".$iAktuelleZeit.".png?".$iAktuelleZeit."' width=$iBildBreiteProf height=$iBildHoeheProf id='imgTmpProf' onclick=this.src='./kurven/kurve2"."_".$iAktuelleZeit.".png?".$iAktuelleZeit.";' alt='image' USEMAP='#mapProf'>"?>
-			<? echo "<A HREF='javascript:wechsleProfBild()'> <img border='0' src='./kurven/kurve2"."_".$iAktuelleZeit.".png?".$iAktuelleZeit."' width=$iBildBreiteProf height=$iBildHoeheProf id='imgTmpProf' alt='Für Detailansicht klicken' USEMAP='#mapProf'> </A>"?>
+			<? echo "<A HREF='javascript:wechsleProfBild()'> <img border='0' src='./kurven/kurve2"."_".$iAktuelleZeit.".png?".$iAktuelleZeit."' width=$iBildBreiteProf height=$iBildHoeheProf id='imgTmpProf' alt='Fï¿½r Detailansicht klicken' USEMAP='#mapProf'> </A>"?>
 		</td>	
 
   </tr>

@@ -26,7 +26,7 @@ $oDatum = mktime($oZeitTeile[0],$oZeitTeile[1],$oZeitTeile[2],$oDatumTeile[1],$o
 
 <?
 $sNavigationsQuelle = "einzelnegrafik";
-$sSchaltflächenBeschriftung = "Aktualisieren";
+$sSchaltflÃ¤chenBeschriftung = "Aktualisieren";
 include('./Formular.php');
 
 if($bGlobalDebug){
@@ -107,19 +107,19 @@ if($bGlobalDebug){
 		//////////////////////////////////////////////////
 		 // Variable deklarieren 
 		 $dir = "./kurven/"; 
-		 // Variable deklarieren und Verzeichnis öffnen 
+		 // Variable deklarieren und Verzeichnis ï¿½ffnen 
 		 $verz = opendir($dir); 
 		 // Verzeichnisinhalt auslesen 
 		 while ($file = readdir ($verz))  
 		 { 
-		  // "." und ".." bei der Ausgabe unterdrücken 
+		  // "." und ".." bei der Ausgabe unterdrï¿½cken 
 		  if($file != "." && $file != "..")  
 		  { 
-		   // File löschen 
+		   // File lï¿½schen 
 		   @unlink($dir.$file); 
 		  } 
 		 } 
-		// Verzeichnis schließen 
+		// Verzeichnis schlieï¿½en 
 		closedir($verz);  
 	//////////////////////////////////////////////////
 	
@@ -134,7 +134,7 @@ if($bGlobalDebug){
 		//@unlink($fileName);
 		
 	?>
-	<br>Um den genauen Wert bzw. die genaue Messzeit eines Wertes einzublenden, fahren Sie mit der Maus auf den gewünschten Wert. 
+	<br>Um den genauen Wert bzw. die genaue Messzeit eines Wertes einzublenden, fahren Sie mit der Maus auf den gewï¿½nschten Wert. 
 	</td>
 
   </tr>

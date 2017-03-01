@@ -72,8 +72,8 @@ header("Pragma: no-cache"); // HTTP/1.0
 
 
 <?php include('./Kopf.php')?>
-<?php include('./Navigation.php') ?>
-<?php include('./Inhalt.php') ?>
+<?php include('./Navigation.php')?>
+<?php include('./Inhalt.php')?>
 <?php include('./Fuss.php')?>
 
 

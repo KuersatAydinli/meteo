@@ -1,3 +1,4 @@
 Worklog
 
 26.02.2017::5h::Install and configure local version of MeteoVaduz
+27.02.2017::3h::Include Bootstrap CSS/JS components into project and apply to navbar etc.

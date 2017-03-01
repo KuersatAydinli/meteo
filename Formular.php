@@ -67,7 +67,7 @@ if($bGlobalDebug){
 		$sDatumBis=$sKonBisDatum;
     
 
-	//echo urldecode("http://meteovaduz.schulen.li/meteo/%3Cbr%20/%3E%3Cb%3ENotice%3C/b%3E:%20%20Undefined%20variable:%20sFrmVonDatum_loc%20in%20%3Cb%3EC:/MeteoLGVaduz/Programme/Web/xampp/htdocs/meteo/Formular.php%3C/b%3E%20on%20line%20%3Cb%3E37%3C/b%3E%3Cbr%20/%3E%3Cbr%20/%3E%3Cb%3ENotice%3C/b%3E:%20%20Undefined%20variable:%20sFrmBisDatum_loc%20in%20%3Cb%3EC:/MeteoLGVaduz/Programme/Web/xampp/htdocs/meteo/Formular.php%3C/b%3E%20on%20line%20%3Cb%3E37%3C/b%3E%3Cbr%20/%3E./index.php?sNavigationsSeite=einzelnegrafik&bSelbstAufruf=yes&formFrom=&formTo=&ESensor=W0&ETitel=Temperatur in °C&kFarbe=red&iXBezIntervallWert=6&oZeitIntervall=6&iBrowserFensterBreite=1149&iBrowserFensterHoehe=621");
+	//echo urldecode("http://meteovaduz.schulen.li/meteo/%3Cbr%20/%3E%3Cb%3ENotice%3C/b%3E:%20%20Undefined%20variable:%20sFrmVonDatum_loc%20in%20%3Cb%3EC:/MeteoLGVaduz/Programme/Web/xampp/htdocs/meteo/Formular.php%3C/b%3E%20on%20line%20%3Cb%3E37%3C/b%3E%3Cbr%20/%3E%3Cbr%20/%3E%3Cb%3ENotice%3C/b%3E:%20%20Undefined%20variable:%20sFrmBisDatum_loc%20in%20%3Cb%3EC:/MeteoLGVaduz/Programme/Web/xampp/htdocs/meteo/Formular.php%3C/b%3E%20on%20line%20%3Cb%3E37%3C/b%3E%3Cbr%20/%3E./index.php?sNavigationsSeite=einzelnegrafik&bSelbstAufruf=yes&formFrom=&formTo=&ESensor=W0&ETitel=Temperatur in ï¿½C&kFarbe=red&iXBezIntervallWert=6&oZeitIntervall=6&iBrowserFensterBreite=1149&iBrowserFensterHoehe=621");
 	
 
 ?>
@@ -79,21 +79,21 @@ if($bGlobalDebug){
 
 <table border="0" cellspacing="0" width="100%" class="formtabletext">
 
-   <tr class="FormInfoText2">Geben Sie die gewünschte Ansichtsdauer ein, z.B. von 01.02.2010 03:32 bis 12.02.2010 10:15 </tr>
+   <tr class="FormInfoText2">Geben Sie die gewï¿½nschte Ansichtsdauer ein, z.B. von 01.02.2010 03:32 bis 12.02.2010 10:15 </tr>
    <!--
-   <tr class="FormInfoText2">oder wählen Sie anhand der Auswahlmöglichkeiten einen vordefinierten Zeitraum (z.B. 12 Stunden) und klicken Sie anschliessend auf ‚Aktualisieren‘.</tr>
+   <tr class="FormInfoText2">oder wï¿½hlen Sie anhand der Auswahlmï¿½glichkeiten einen vordefinierten Zeitraum (z.B. 12 Stunden) und klicken Sie anschliessend auf ï¿½Aktualisierenï¿½.</tr>
    -->
 <?
 		if($_GET['sNavigationsSeite']=="datenexport"){
-   			echo "<tr class='FormInfoText2'>oder wählen Sie anhand der Auswahlmöglichkeiten einen vordefinierten Zeitraum (z.B. 12 Stunden) und klicken Sie anschliessend auf ‚Download‘.</tr>";			
+   			echo "<tr class='FormInfoText2'>oder wï¿½hlen Sie anhand der Auswahlmï¿½glichkeiten einen vordefinierten Zeitraum (z.B. 12 Stunden) und klicken Sie anschliessend auf ï¿½Downloadï¿½.</tr>";			
 		}else{			
-   			echo "<tr class='FormInfoText2'>oder wählen Sie anhand der Auswahlmöglichkeiten einen vordefinierten Zeitraum (z.B. 12 Stunden) und klicken Sie anschliessend auf ‚Aktualisieren‘.</tr>";			
+   			echo "<tr class='FormInfoText2'>oder wï¿½hlen Sie anhand der Auswahlmï¿½glichkeiten einen vordefinierten Zeitraum (z.B. 12 Stunden) und klicken Sie anschliessend auf ï¿½Aktualisierenï¿½.</tr>";			
 		}
 
 
 
    if($_GET['sNavigationsSeite']=="einzelnegrafik"){
-				echo "<tr align='left' class='FormInfoText2'>Mit 'Download' können Sie die Werte in tabellarischer Form herunterladen.</tr>";		
+				echo "<tr align='left' class='FormInfoText2'>Mit 'Download' kï¿½nnen Sie die Werte in tabellarischer Form herunterladen.</tr>";		
 		
    }
 ?>
@@ -102,19 +102,36 @@ if($bGlobalDebug){
     
     <? 
     $seite = $_GET['sNavigationsSeite'];
-    echo "<td width='' class='FormInfoText2'>von <input type='text' id='sFrmVonDatum' name='sFrmVonDatum'  value='$sDatumVon' onchange='chkMinDate(\"$seite\")'></td>";?>
-    <td width="">bis <input type="text" name="sFrmBisDatum" id="sFrmBisDatum" size="20" value="<?echo $sDatumBis?>"></td>
+    echo "
+    <div class='container'>
+        <div class='row'>
+            <div class='form-inline'>
+                <div class='form-group'>
+                <label for='sFrmVonDatum'>Von: </label>
+                <input type='text' id='sFrmVonDatum' class='form-control' name='sFrmVonDatum'  value='$sDatumVon' onchange='chkMinDate(\"$seite\")'>
+                </div>
+                <div class='form-group'>
+                <label for='sFrmBisDatum'>Bis: </label>
+                <input type=\"text\" class='form-control' name=\"sFrmBisDatum\" id=\"sFrmBisDatum\" size=\"20\" value='$sDatumBis'>
+                </div>
+                <button type='submit' class='btn btn-primary' value='$sSchaltflÃ¤chenBeschriftung'>Aktualisieren</button>
+            </div>
+            <!--<td width='' class='FormInfoText2'>von <input type='text' id='sFrmVonDatum' class='form-control' name='sFrmVonDatum'  value='$sDatumVon' onchange='chkMinDate(\"$seite\")'></td>-->
+        </div>    
+    </div>";
+    ?>
+    <!--<td width="">bis <input type="text" class='form-control' name="sFrmBisDatum" id="sFrmBisDatum" size="20" value="<?/*echo $sDatumBis*/?>"></td>
 
-	<td width="" >
+	<td width="" >-->
 	<?
 		if($_GET['sNavigationsSeite']=="datenexport"){
-			echo "<input type='button' name='download' value='$sSchaltflächenBeschriftung' onClick='erstelleDownloadLink(\"alle\")'>";
+			echo "<input type='button' name='download' value='$sSchaltflÃ¤chenBeschriftung' onClick='erstelleDownloadLink(\"alle\")'>";
 			echo "<input type='radio' name='Radiodateityp' checked value='excel' onClick='wechsleDownloadBild()'> CSV-Datei<input type='radio' name='Radiodateityp' value='bUrlCvsAuswahl' onClick='wechsleDownloadBild()'> Exceldatei<br>";
 			echo "<input type='radio' name='RadiodateitypTable' checked value='luft'> Datenexport Luftwerte<input type='radio' name='RadiodateitypTable' value='boden'> Datenexport Bodenwerte<br></td>";
 		}else{			
-			echo "<input type='submit' value='$sSchaltflächenBeschriftung' name='Aktualisieren' ></td>";
+			/*echo "<button type='submit' class='btn btn-primary' value='$sSchaltflÃ¤chenBeschriftung'>Aktualisieren</button>";*/
 		}
-	//bei einzelner grafik könnne die werte auch in tabellarischer Form heruntergeladen werden
+	//bei einzelner grafik kï¿½nnne die werte auch in tabellarischer Form heruntergeladen werden
 	if($_GET['sNavigationsSeite']=="einzelnegrafik"){
 		$esen = $_GET['ESensor'];
 		echo "<td ><input type='button' name='download' value = 'Download' onClick='erstelleDownloadLink(\"$esen\")'>";
@@ -137,7 +154,7 @@ if($bGlobalDebug){
    		<td class="padding0"><input TYPE="radio" VALUE="6" NAME="oZeitIntervall"  <?if(($oZeitIntervall==6) ||(!isset($oZeitIntervall))){echo "checked";}?> onClick="anpassenVonUndBis('xgrid',<? echo "'".$seite."'" ?>)" > 6 Stunden<br></td>
    		<td class="padding0"><input TYPE="radio" VALUE="12" NAME="oZeitIntervall" <?if($oZeitIntervall==12){echo "checked";}?> onClick="anpassenVonUndBis('xgrid',<? echo "'".$seite."'" ?>)">   12 Stunden<br></td>
    		<td class="padding0"><input TYPE="radio" VALUE="24" NAME="oZeitIntervall" <?if($oZeitIntervall==24){echo "checked";}?> onClick="anpassenVonUndBis('xgrid',<? echo "'".$seite."'" ?>)">   24 Stunden<br></td>
-<?if($_GET['sNavigationsSeite']!="datenexport"){echo "<td class='FormInfoText2'>Wählen Sie das Beschriftungsintervall der X-Achse aus und klicken Sie anschliessend auf ‚Aktualisieren‘
+<?if($_GET['sNavigationsSeite']!="datenexport"){echo "<td class='FormInfoText2'>Wï¿½hlen Sie das Beschriftungsintervall der X-Achse aus und klicken Sie anschliessend auf ï¿½Aktualisierenï¿½
 .</td>";}?>
 	</tr>
 	<tr>   		

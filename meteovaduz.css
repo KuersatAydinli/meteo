@@ -48,7 +48,6 @@ color: black;
 .FormInfoText2 {
 	font: 12px Verdana, Helvetica, sans-serif;
 	color:black;
-
 }
 
 
@@ -101,7 +100,7 @@ margin-top:0px;
 .mittelWerteTextTM{
 	font: 14px Verdana, Helvetica, sans-serif;
     border: outset 5pt;
-    cellspacing=1;
+    cellspacing:1;
     border-collapse: separate;
     border-spacing: 2px 2px;
 	float:left;
