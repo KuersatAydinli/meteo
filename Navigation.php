@@ -21,20 +21,25 @@ Darstellung</a>&nbsp;&nbsp;&nbsp;
 
 
 <nav class="navbar navbar-inverse" role="navigation">
-    <div class="container">
-        <div id="navbar" class="navbar-collapse collapse">
-            <ul class="nav navbar-nav">
-                <li class="active"><a id="a_aktuellewerte" href="./Index.php?sNavigationsSeite=aktuellewerte&iXBezIntervallWert=6">Aktuelle Messwerte</a></li>
-                <li><a id="a_allegrafik" href="./Index.php?sNavigationsSeite=allegrafik&iXBezIntervallWert=6">Grafische Darstellung Luftwerte</a></li>
-                <li><a id="a_allegrafikBoden" href="./Index.php?sNavigationsSeite=allegrafikBoden&iXBezIntervallWert=6">Grafische Darstellung Bodenwerte</a></li>
-                <li><a id="a_mittelwerte" href="./index.php?sNavigationsSeite=mittelwerte&iXBezIntervallWert=6">Mittelwerte</a></li>
-                <li><a id="a_klimadiagramm" href="./index.php?sNavigationsSeite=klimadiagramm&iXBezIntervallWert=6">Klimadiagramm</a></li>
-                <li><a id="a_datenexport" href="./index.php?sNavigationsSeite=datenexport&iXBezIntervallWert=6">Datenexport</a></li>
-                <li><a id="a_infoseite" href="./index.php?sNavigationsSeite=infoseite&iXBezIntervallWert=6">Informationen</a></li>
-                <li><a id="a_bilder" href="./index.php?sNavigationsSeite=bilder&iXBezIntervallWert=6">Bilder</a></li>
-                <li><a id="a_publikationen" href="./index.php?sNavigationsSeite=publikationen&iXBezIntervallWert=6">Publikationen</a></li>
-            </ul>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-12">
+                <div id="navbar" class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                        <li class="active"><a id="a_aktuellewerte" href="./Index.php?sNavigationsSeite=aktuellewerte&iXBezIntervallWert=6">Aktuelle Messwerte</a></li>
+                        <li><a id="a_allegrafik" href="./Index.php?sNavigationsSeite=allegrafik&iXBezIntervallWert=6">Grafische Darstellung Luftwerte</a></li>
+                        <li><a id="a_allegrafikBoden" href="./Index.php?sNavigationsSeite=allegrafikBoden&iXBezIntervallWert=6">Grafische Darstellung Bodenwerte</a></li>
+                        <li><a id="a_mittelwerte" href="./index.php?sNavigationsSeite=mittelwerte&iXBezIntervallWert=6">Mittelwerte</a></li>
+                        <li><a id="a_klimadiagramm" href="./index.php?sNavigationsSeite=klimadiagramm&iXBezIntervallWert=6">Klimadiagramm</a></li>
+                        <li><a id="a_datenexport" href="./index.php?sNavigationsSeite=datenexport&iXBezIntervallWert=6">Datenexport</a></li>
+                        <li><a id="a_infoseite" href="./index.php?sNavigationsSeite=infoseite&iXBezIntervallWert=6">Informationen</a></li>
+                        <li><a id="a_bilder" href="./index.php?sNavigationsSeite=bilder&iXBezIntervallWert=6">Bilder</a></li>
+                        <li><a id="a_publikationen" href="./index.php?sNavigationsSeite=publikationen&iXBezIntervallWert=6">Publikationen</a></li>
+                    </ul>
+                </div>
+            </div>
         </div>
+
         <!--<div class="col-sm-4">
             <ul class="nav navbar-nav navbar-right">
                 <li><a data-toggle="modal" data-target="#loginModal">

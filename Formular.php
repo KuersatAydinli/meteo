@@ -72,39 +72,31 @@ if($bGlobalDebug){
 
 ?>
 
-
-
-<form name="idFormular" id="idFormular" method="POST" action="<?echo "./index.php?sNavigationsSeite=$sNavigationsQuelle&bSelbstAufruf=yes&formFrom=".$_GET['sFrmVonDatum']."&formTo=".$_GET['sFrmBisDatum']."&ESensor=".$_GET['ESensor']."&ETitel=".$_GET['ETitel']."&kFarbe=".$_GET['kFarbe']."&iXBezIntervallWert=".$iXBezIntervallWert."&oZeitIntervall=".$oZeitIntervall."&iBrowserFensterBreite=".$_GET['iBrowserFensterBreite']."&iBrowserFensterHoehe=".$_GET['iBrowserFensterHoehe'];?>">
-
-
-<table border="0" cellspacing="0" width="100%" class="formtabletext">
-
-   <tr class="FormInfoText2">Geben Sie die gew�nschte Ansichtsdauer ein, z.B. von 01.02.2010 03:32 bis 12.02.2010 10:15 </tr>
-   <!--
-   <tr class="FormInfoText2">oder w�hlen Sie anhand der Auswahlm�glichkeiten einen vordefinierten Zeitraum (z.B. 12 Stunden) und klicken Sie anschliessend auf �Aktualisieren�.</tr>
-   -->
-<?
-		if($_GET['sNavigationsSeite']=="datenexport"){
-   			echo "<tr class='FormInfoText2'>oder w�hlen Sie anhand der Auswahlm�glichkeiten einen vordefinierten Zeitraum (z.B. 12 Stunden) und klicken Sie anschliessend auf �Download�.</tr>";			
-		}else{			
-   			echo "<tr class='FormInfoText2'>oder w�hlen Sie anhand der Auswahlm�glichkeiten einen vordefinierten Zeitraum (z.B. 12 Stunden) und klicken Sie anschliessend auf �Aktualisieren�.</tr>";			
-		}
+<div class="container">
+    <form name="idFormular" id="idFormular" method="POST" action="<?echo "./index.php?sNavigationsSeite=$sNavigationsQuelle&bSelbstAufruf=yes&formFrom=".$_GET['sFrmVonDatum']."&formTo=".$_GET['sFrmBisDatum']."&ESensor=".$_GET['ESensor']."&ETitel=".$_GET['ETitel']."&kFarbe=".$_GET['kFarbe']."&iXBezIntervallWert=".$iXBezIntervallWert."&oZeitIntervall=".$oZeitIntervall."&iBrowserFensterBreite=".$_GET['iBrowserFensterBreite']."&iBrowserFensterHoehe=".$_GET['iBrowserFensterHoehe'];?>">
+        <div class="form-group row row-content">
+            <label>
+                Geben Sie die gewünschte Ansichtsdauer ein, z.B. von 01.02.2010 03:32 bis 12.02.2010 10:15
+                <?
+                if($_GET['sNavigationsSeite']=="datenexport"){
+                    echo "oder w�hlen Sie anhand der Auswahlm�glichkeiten einen vordefinierten Zeitraum (z.B. 12 Stunden) und klicken Sie anschliessend auf �Download�.";
+                }else{
+                    echo "oder w�hlen Sie anhand der Auswahlm�glichkeiten einen vordefinierten Zeitraum (z.B. 12 Stunden) und klicken Sie anschliessend auf �Aktualisieren�.";
+                }
 
 
 
-   if($_GET['sNavigationsSeite']=="einzelnegrafik"){
-				echo "<tr align='left' class='FormInfoText2'>Mit 'Download' k�nnen Sie die Werte in tabellarischer Form herunterladen.</tr>";		
-		
-   }
-?>
-  <tr class="FormInfoText2">
-    
-    
-    <? 
-    $seite = $_GET['sNavigationsSeite'];
-    echo "
-    <div class='container'>
-        <div class='row'>
+                if($_GET['sNavigationsSeite']=="einzelnegrafik"){
+                    echo "Mit 'Download' k�nnen Sie die Werte in tabellarischer Form herunterladen.";
+
+                }
+                ?>
+            </label>
+        </div>
+        <div class="form-group row row-content">
+            <?
+            $seite = $_GET['sNavigationsSeite'];
+            echo "
             <div class='form-inline'>
                 <div class='form-group'>
                 <label for='sFrmVonDatum'>Von: </label>
@@ -115,81 +107,81 @@ if($bGlobalDebug){
                 <input type=\"text\" class='form-control' name=\"sFrmBisDatum\" id=\"sFrmBisDatum\" size=\"20\" value='$sDatumBis'>
                 </div>
                 <button type='submit' class='btn btn-primary' value='$sSchaltflächenBeschriftung'>Aktualisieren</button>
+            </div>"?>
+            <?
+            if($_GET['sNavigationsSeite']=="datenexport"){
+                echo "<input type='button' name='download' value='$sSchaltflächenBeschriftung' onClick='erstelleDownloadLink(\"alle\")'>";
+                echo "<input type='radio' name='Radiodateityp' checked value='excel' onClick='wechsleDownloadBild()'> CSV-Datei<input type='radio' name='Radiodateityp' value='bUrlCvsAuswahl' onClick='wechsleDownloadBild()'> Exceldatei<br>";
+                echo "<input type='radio' name='RadiodateitypTable' checked value='luft'> Datenexport Luftwerte<input type='radio' name='RadiodateitypTable' value='boden'> Datenexport Bodenwerte<br></td>";
+            }else{
+                /*echo "<button type='submit' class='btn btn-primary' value='$sSchaltflächenBeschriftung'>Aktualisieren</button>";*/
+            }
+            //bei einzelner grafik k�nnne die werte auch in tabellarischer Form heruntergeladen werden
+            if($_GET['sNavigationsSeite']=="einzelnegrafik"){
+                $esen = $_GET['ESensor'];
+                echo "<td ><input type='button' name='download' value = 'Download' onClick='erstelleDownloadLink(\"$esen\")'>";
+                echo "<input type='radio' name='Radiodateityp' checked value='excel'> CSV-Datei<input type='radio' name='Radiodateityp' value='bUrlCvsAuswahl'> Excel-Datei<br></td>";
+            }
+            ?>
+
+            <?
+            if($_GET['sNavigationsSeite']=="datenexport"){
+                /*
+                    echo "<td width=''>";
+                      echo"<input type='radio' name='Radiodateityp' checked value='excel'> CSV-Datei<br></td>";
+                    echo"<td><input type='radio' name='Radiodateityp' value='bUrlCvsAuswahl'> Exceldatei<br></td>";
+                */
+            }
+
+            ?>
+        </div>
+        <div class="form-group row row-content">
+            <div class="col-sm-4">
+                <label for="zeitIntervall">
+                    Wählen Sie das Beschriftungsintervall der X-Achse aus und klicken Sie anschliessend auf Aktualisieren
+                </label>
             </div>
-            <!--<td width='' class='FormInfoText2'>von <input type='text' id='sFrmVonDatum' class='form-control' name='sFrmVonDatum'  value='$sDatumVon' onchange='chkMinDate(\"$seite\")'></td>-->
-        </div>    
-    </div>";
-    ?>
-    <!--<td width="">bis <input type="text" class='form-control' name="sFrmBisDatum" id="sFrmBisDatum" size="20" value="<?/*echo $sDatumBis*/?>"></td>
-
-	<td width="" >-->
-	<?
-		if($_GET['sNavigationsSeite']=="datenexport"){
-			echo "<input type='button' name='download' value='$sSchaltflächenBeschriftung' onClick='erstelleDownloadLink(\"alle\")'>";
-			echo "<input type='radio' name='Radiodateityp' checked value='excel' onClick='wechsleDownloadBild()'> CSV-Datei<input type='radio' name='Radiodateityp' value='bUrlCvsAuswahl' onClick='wechsleDownloadBild()'> Exceldatei<br>";
-			echo "<input type='radio' name='RadiodateitypTable' checked value='luft'> Datenexport Luftwerte<input type='radio' name='RadiodateitypTable' value='boden'> Datenexport Bodenwerte<br></td>";
-		}else{			
-			/*echo "<button type='submit' class='btn btn-primary' value='$sSchaltflächenBeschriftung'>Aktualisieren</button>";*/
-		}
-	//bei einzelner grafik k�nnne die werte auch in tabellarischer Form heruntergeladen werden
-	if($_GET['sNavigationsSeite']=="einzelnegrafik"){
-		$esen = $_GET['ESensor'];
-		echo "<td ><input type='button' name='download' value = 'Download' onClick='erstelleDownloadLink(\"$esen\")'>";
-		echo "<input type='radio' name='Radiodateityp' checked value='excel'> CSV-Datei<input type='radio' name='Radiodateityp' value='bUrlCvsAuswahl'> Excel-Datei<br></td>";
-	}
-	?>
-	
-  <?
-	if($_GET['sNavigationsSeite']=="datenexport"){
-	/*
-		echo "<td width=''>";
-  		echo"<input type='radio' name='Radiodateityp' checked value='excel'> CSV-Datei<br></td>";
-		echo"<td><input type='radio' name='Radiodateityp' value='bUrlCvsAuswahl'> Exceldatei<br></td>";
-	*/
-	}
- 
-  ?>	
-   </tr>
-	<tr>
-   		<td class="padding0"><input TYPE="radio" VALUE="6" NAME="oZeitIntervall"  <?if(($oZeitIntervall==6) ||(!isset($oZeitIntervall))){echo "checked";}?> onClick="anpassenVonUndBis('xgrid',<? echo "'".$seite."'" ?>)" > 6 Stunden<br></td>
-   		<td class="padding0"><input TYPE="radio" VALUE="12" NAME="oZeitIntervall" <?if($oZeitIntervall==12){echo "checked";}?> onClick="anpassenVonUndBis('xgrid',<? echo "'".$seite."'" ?>)">   12 Stunden<br></td>
-   		<td class="padding0"><input TYPE="radio" VALUE="24" NAME="oZeitIntervall" <?if($oZeitIntervall==24){echo "checked";}?> onClick="anpassenVonUndBis('xgrid',<? echo "'".$seite."'" ?>)">   24 Stunden<br></td>
-<?if($_GET['sNavigationsSeite']!="datenexport"){echo "<td class='FormInfoText2'>W�hlen Sie das Beschriftungsintervall der X-Achse aus und klicken Sie anschliessend auf �Aktualisieren�
-.</td>";}?>
-	</tr>
-	<tr>   		
-  		<td class="padding0"><input TYPE="radio" VALUE="168" NAME="oZeitIntervall" <?if($oZeitIntervall==168){echo "checked";}?> onClick="anpassenVonUndBis('xgrid',<? echo "'".$seite."'" ?>)"> 1 Woche<br></td>
-   		<td class="padding0"><input TYPE="radio" VALUE="720" NAME="oZeitIntervall" <?if($oZeitIntervall==720){echo "checked";}?> onClick="anpassenVonUndBis('xgrid',<? echo "'".$seite."'" ?>)">   1 Monat<br></td>
-  		
-  		<td class="padding0"><input TYPE="radio" VALUE="8760" NAME="oZeitIntervall" <?if($oZeitIntervall==8760){echo "checked";}?> onClick="anpassenVonUndBis('xgrid',<? echo "'".$seite."'" ?>)">   1 Jahr<br></td>
-<?
-
-//echo $iXBezIntervallWert;
-
-if($_GET['sNavigationsSeite']!="datenexport"){
-echo "<td class='padding0'>";
- 		echo "<SELECT NAME='iXBezIntervallWert'>";
- 			echo "<OPTION "; if($iXBezIntervallWert==1){echo "selected ";} echo " VALUE='1'>10 Minuten";
-			echo "<OPTION "; if($iXBezIntervallWert==3){echo "selected ";} echo " VALUE='3'>30 Minuten";
-			echo "<OPTION "; if(($iXBezIntervallWert==6) ||(!isset($iXBezIntervallWert))){echo "selected ";} echo "VALUE='6' >1 Stunde";
-			echo "<OPTION "; if($iXBezIntervallWert==72){echo "selected ";} echo " VALUE='72'>12 Stunden";
-			echo "<OPTION "; if($iXBezIntervallWert==144){echo "selected ";} echo " VALUE='144'>1 Tag";
-			echo "<OPTION "; if($iXBezIntervallWert==1008){echo "selected ";} echo " VALUE='1008'>1 Woche";
-			echo "<OPTION "; if($iXBezIntervallWert==4320){echo "selected ";} echo " VALUE='4320'>1 Monat";
-			echo "<OPTION "; if($iXBezIntervallWert==52560){echo "selected ";} echo " VALUE='52560'>1 Jahr";
-
-		echo "</SELECT>";
-echo "</td>";
-}else{
-	echo "<td>";
-	echo "<input type='hidden' NAME='iXBezIntervallWert'>";
-	echo "</SELECT>";
-	echo "</td>";
-}
-
-?>
-
-
- 	</tr>	
-</table>
-</form>
+            <div class="col-sm-8">
+                <div class="btn-group" role="group" id="zeitIntervall">
+                    <button type="button" class="btn btn-default" VALUE="6" NAME="oZeitIntervall"  <?if(($oZeitIntervall==6) ||(!isset($oZeitIntervall))){echo "checked";}?> onClick="anpassenVonUndBis('xgrid',<? echo "'".$seite."'" ?>)" >
+                        6 Stunden
+                    </button>
+                    <button type="button" class="btn btn-default" VALUE="12" NAME="oZeitIntervall" <?if($oZeitIntervall==12){echo "checked";}?> onClick="anpassenVonUndBis('xgrid',<? echo "'".$seite."'" ?>)">
+                        12 Stunden
+                    </button>
+                    <button type="button" class="btn btn-default" VALUE="24" NAME="oZeitIntervall" <?if($oZeitIntervall==24){echo "checked";}?> onClick="anpassenVonUndBis('xgrid',<? echo "'".$seite."'" ?>)">
+                        24 Stunden
+                    </button>
+                    <button type="button" class="btn btn-default" VALUE="168" NAME="oZeitIntervall" <?if($oZeitIntervall==168){echo "checked";}?> onClick="anpassenVonUndBis('xgrid',<? echo "'".$seite."'" ?>)">
+                        1 Woche
+                    </button>
+                    <button type="button" class="btn btn-default" VALUE="720" NAME="oZeitIntervall" <?if($oZeitIntervall==720){echo "checked";}?> onClick="anpassenVonUndBis('xgrid',<? echo "'".$seite."'" ?>)">
+                        1 Monat
+                    </button>
+                    <button type="button" class="btn btn-default" VALUE="8760" NAME="oZeitIntervall" <?if($oZeitIntervall==8760){echo "checked";}?> onClick="anpassenVonUndBis('xgrid',<? echo "'".$seite."'" ?>)">
+                        1 Jahr
+                    </button>
+                    <?
+                    if($_GET['sNavigationsSeite']!="datenexport"){
+                        echo "<SELECT class='selectpicker' NAME='iXBezIntervallWert'>";
+                        echo "<OPTION "; if($iXBezIntervallWert==1){echo "selected ";} echo " VALUE='1'>10 Minuten";
+                        echo "<OPTION "; if($iXBezIntervallWert==3){echo "selected ";} echo " VALUE='3'>30 Minuten";
+                        echo "<OPTION "; if(($iXBezIntervallWert==6) ||(!isset($iXBezIntervallWert))){echo "selected ";} echo "VALUE='6' >1 Stunde";
+                        echo "<OPTION "; if($iXBezIntervallWert==72){echo "selected ";} echo " VALUE='72'>12 Stunden";
+                        echo "<OPTION "; if($iXBezIntervallWert==144){echo "selected ";} echo " VALUE='144'>1 Tag";
+                        echo "<OPTION "; if($iXBezIntervallWert==1008){echo "selected ";} echo " VALUE='1008'>1 Woche";
+                        echo "<OPTION "; if($iXBezIntervallWert==4320){echo "selected ";} echo " VALUE='4320'>1 Monat";
+                        echo "<OPTION "; if($iXBezIntervallWert==52560){echo "selected ";} echo " VALUE='52560'>1 Jahr";
+                        echo "</SELECT>";
+                    }else{
+                        echo "<td>";
+                        echo "<input type='hidden' NAME='iXBezIntervallWert'>";
+                        echo "</SELECT>";
+                        echo "</td>";
+                    }
+                    ?>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
