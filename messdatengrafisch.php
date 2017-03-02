@@ -4,221 +4,182 @@
             <h2>Messwertedarstellung Wettersensoren</h2>
         </div>
     </div>
+    <div class="row-content row">
+        <?
+        $sNavigationsQuelle = "allegrafik";
+        $sSchaltflächenBeschriftung = "Aktualisieren";
+        include('./Formular.php');
+        ?>
+    </div>
+    <div class="row row-content">
+        <?
 
-    <?
-    $sNavigationsQuelle = "allegrafik";
-    $sSchaltflächenBeschriftung = "Aktualisieren";
-	include('./Formular.php');
-    ?>
-
-    <?
-
-    ////////////////////////////////////////////////////////////////////
-    //VAR-Handling
-    if(isset($_POST['iXBezIntervallWert'])){
-        $iXBezIntervallWert = $_POST['iXBezIntervallWert'];
-    }
-    elseif(isset($_GET['iXBezIntervallWert'])){
-        $iXBezIntervallWert = $_GET['iXBezIntervallWert'];
-    }
-    ////////////////////////////////////////////////////////////////////
-
-
-    if($bGlobalDebug){
-        echo "sFrmVonDatum is: ".$sFrmVonDatum;
-        echo "sFrmBisDatum is: ".$sFrmBisDatum;
-        echo "Datum von Formular: ".$oDatum;
-    }
-
-    if (!isset($_GET['bSelbstAufruf'])) {
-        $_GET['bSelbstAufruf'] = '';
-    }
-
-
-    //wenn von gleicher seite anhand aktualisierenbutton
-    if($_GET['bSelbstAufruf']){
-
-        if($bGlobalDebug){echo "bSelbstAufruf";}
-
-        if(isset($_POST['sFrmVonDatum'])){
-            $sKonVonDatum = $_POST['sFrmVonDatum'];
-            $sKonBisDatum = $_POST['sFrmBisDatum'];
-
+        ////////////////////////////////////////////////////////////////////
+        //VAR-Handling
+        if(isset($_POST['iXBezIntervallWert'])){
+            $iXBezIntervallWert = $_POST['iXBezIntervallWert'];
         }
-        elseif(isset($_GET['sFrmVonDatum'])){
-            $sKonVonDatum = $_GET['sFrmVonDatum'];
-            $sKonBisDatum = $_GET['sFrmBisDatum'];
+        elseif(isset($_GET['iXBezIntervallWert'])){
+            $iXBezIntervallWert = $_GET['iXBezIntervallWert'];
+        }
+        ////////////////////////////////////////////////////////////////////
+
+
+        if($bGlobalDebug){
+            echo "sFrmVonDatum is: ".$sFrmVonDatum;
+            echo "sFrmBisDatum is: ".$sFrmBisDatum;
+            echo "Datum von Formular: ".$oDatum;
         }
 
-    }else{
-        if($bGlobalDebug){echo "fromIndex";}
-        $sKonVonDatum = Date('d.m.Y H:i',$oDatum - 21600);
-        $sKonBisDatum = 	Date('d.m.Y H:i',$oDatum);
-
-    }
-
-    //generiere alle grafiken
-    $sDatumVon=$sKonVonDatum;
-    $sDatumBis=$sKonBisDatum;
-
-    if($bGlobalDebug){
-        echo "Von vor alle grafik generiereung: ".$sDatumVon;
-        echo "Bis vor alle grafik generiereung: ".$sDatumBis;
-    }
-
-    $iBildBreite=ceil($_GET['iBrowserFensterBreite'] / 3);
-    $iBildHoehe = ceil($_GET['iBrowserFensterHoehe'] / 3);
-    $iAnzahlSensoren = 7;
-
-    $iAnzahlSensoren_additional = 5;
-    $isensor_id_add1 = 8; //temperatur dach
-    $isensor_id_add2 = 11; //windspitze
-    $isensor_id_add3 = 13; //Rgeenst�rke
-    $isensor_id_add4 = 15; //barom. Druck
-    $isensor_id_add5 = 16; //Tauopunkt
+        if (!isset($_GET['bSelbstAufruf'])) {
+            $_GET['bSelbstAufruf'] = '';
+        }
 
 
+        //wenn von gleicher seite anhand aktualisierenbutton
+        if($_GET['bSelbstAufruf']){
 
-    $sURLSensor = "*";
+            if($bGlobalDebug){echo "bSelbstAufruf";}
+
+            if(isset($_POST['sFrmVonDatum'])){
+                $sKonVonDatum = $_POST['sFrmVonDatum'];
+                $sKonBisDatum = $_POST['sFrmBisDatum'];
+
+            }
+            elseif(isset($_GET['sFrmVonDatum'])){
+                $sKonVonDatum = $_GET['sFrmVonDatum'];
+                $sKonBisDatum = $_GET['sFrmBisDatum'];
+            }
+
+        }else{
+            if($bGlobalDebug){echo "fromIndex";}
+            $sKonVonDatum = Date('d.m.Y H:i',$oDatum - 21600);
+            $sKonBisDatum = 	Date('d.m.Y H:i',$oDatum);
+
+        }
+
+        //generiere alle grafiken
+        $sDatumVon=$sKonVonDatum;
+        $sDatumBis=$sKonBisDatum;
+
+        if($bGlobalDebug){
+            echo "Von vor alle grafik generiereung: ".$sDatumVon;
+            echo "Bis vor alle grafik generiereung: ".$sDatumBis;
+        }
+
+        $iBildBreite=ceil($_GET['iBrowserFensterBreite'] / 3);
+        $iBildHoehe = ceil($_GET['iBrowserFensterHoehe'] / 3);
+        $iAnzahlSensoren = 7;
+
+        $iAnzahlSensoren_additional = 5;
+        $isensor_id_add1 = 8; //temperatur dach
+        $isensor_id_add2 = 11; //windspitze
+        $isensor_id_add3 = 13; //Rgeenst�rke
+        $isensor_id_add4 = 15; //barom. Druck
+        $isensor_id_add5 = 16; //Tauopunkt
 
 
 
-    //////////////////////////////////////////////////
-    // Variable deklarieren
-    $dir = "./kurven/";
-    // Variable deklarieren und Verzeichnis �ffnen
-    $verz = opendir($dir);
-    // Verzeichnisinhalt auslesen
-    while ($file = readdir ($verz))
-    {
-        // "." und ".." bei der Ausgabe unterdr�cken
-        if($file != "." && $file != "..")
+        $sURLSensor = "*";
+
+
+
+        //////////////////////////////////////////////////
+        // Variable deklarieren
+        $dir = "./kurven/";
+        // Variable deklarieren und Verzeichnis �ffnen
+        $verz = opendir($dir);
+        // Verzeichnisinhalt auslesen
+        while ($file = readdir ($verz))
         {
-            // File l�schen
-            @unlink($dir.$file);
+            // "." und ".." bei der Ausgabe unterdr�cken
+            if($file != "." && $file != "..")
+            {
+                // File l�schen
+                @unlink($dir.$file);
+            }
         }
-    }
-    // Verzeichnis schlie�en
-    closedir($verz);
-    //////////////////////////////////////////////////
+        // Verzeichnis schlie�en
+        closedir($verz);
+        //////////////////////////////////////////////////
 
 
 
-    $iAktuelleZeit = time();
-    include ('./AlleJPGrafik.php');
+        $iAktuelleZeit = time();
+        include ('./AlleJPGrafik.php');
 
 
-    $iBild
+        $iBild
 
-    /*
-     * "./kurven/kurve".$iAnzahlSensorenIndex."_".$iAktuelleZeit.".png"
-     *
-     * */
-
-    ?>
-
-    <table border="0" cellspacing="1" width="100%" >
-        <tr>
-            <td width="33%">
-
-
-                <?echo "<a href='./index.php?sNavigationsSeite=einzelnegrafik&bSelbstAufruf=yes&sFrmVonDatum=$sKonVonDatum&sFrmBisDatum=$sKonBisDatum&ESensor=W1&ETitel=Druck%20in%20hpa&kFarbe=darkgreen&iBrowserFensterBreite=".$_GET['iBrowserFensterBreite']."&iBrowserFensterHoehe=".$_GET['iBrowserFensterHoehe']."&iXBezIntervallWert=".$iXBezIntervallWert."&oZeitIntervall=".$oZeitIntervall." target='_blank'>";?>
-                <?echo "<img border='0' src='./kurven/kurve1"."_".$iAktuelleZeit.".png?".$iAktuelleZeit."' width=$iBildBreite height=$iBildHoehe'>"?>
-                </a>
-            </td>
-            <td width="33%">
-
-                <?echo "<a href='./index.php?sNavigationsSeite=einzelnegrafik&bSelbstAufruf=yes&sFrmVonDatum=$sKonVonDatum&sFrmBisDatum=$sKonBisDatum&ESensor=W0&ETitel=Temperatur%20in%20�C&kFarbe=red&iBrowserFensterBreite=".$_GET['iBrowserFensterBreite']."&iBrowserFensterHoehe=".$_GET['iBrowserFensterHoehe']."&iXBezIntervallWert=".$iXBezIntervallWert."&oZeitIntervall=".$oZeitIntervall." target='_blank'>";?>
-                <?echo "<img border='0' src='./kurven/kurve0"."_".$iAktuelleZeit.".png?".$iAktuelleZeit."' width=$iBildBreite height=$iBildHoehe'>"?>
-                </a>
-            </td>
-            <td width="34%">
-
-                <?echo "<a href='./index.php?sNavigationsSeite=einzelnegrafik&bSelbstAufruf=yes&sFrmVonDatum=$sKonVonDatum&sFrmBisDatum=$sKonBisDatum&ESensor=W5&ETitel=Windgeschwindigkeit%20in%20km/h&kFarbe=brown&iBrowserFensterBreite=".$_GET['iBrowserFensterBreite']."&iBrowserFensterHoehe=".$_GET['iBrowserFensterHoehe']."&iXBezIntervallWert=".$iXBezIntervallWert."&oZeitIntervall=".$oZeitIntervall." target='_blank'>";?>
-                <?echo "<img border='0' src='./kurven/kurve5"."_".$iAktuelleZeit.".png?".$iAktuelleZeit."' width=$iBildBreite height=$iBildHoehe'>"?>
-                </a>
-            </td>
-        </tr>
-        <tr>
-
-            <td width="33%">
-
-                <?echo "<a href='./index.php?sNavigationsSeite=einzelnegrafik&bSelbstAufruf=yes&sFrmVonDatum=$sKonVonDatum&sFrmBisDatum=$sKonBisDatum&ESensor=W3&ETitel=Regen%20in mm/m^2&kFarbe=black&iBrowserFensterBreite=".$_GET['iBrowserFensterBreite']."&iBrowserFensterHoehe=".$_GET['iBrowserFensterHoehe']."&iXBezIntervallWert=".$iXBezIntervallWert."&oZeitIntervall=".$oZeitIntervall." target='_blank'>";?>
-                <?echo "<img border='0' src='./kurven/kurve3"."_".$iAktuelleZeit.".png?".$iAktuelleZeit."' width=$iBildBreite height=$iBildHoehe'>"?>
-                </a>
-            </td>
-
-            <td width="33%">
-
-                <?echo "<a href='./index.php?sNavigationsSeite=einzelnegrafik&bSelbstAufruf=yes&sFrmVonDatum=$sKonVonDatum&sFrmBisDatum=$sKonBisDatum&ESensor=W2&ETitel=Feuchte%20in%20%&kFarbe=darkblue&iBrowserFensterBreite=".$_GET['iBrowserFensterBreite']."&iBrowserFensterHoehe=".$_GET['iBrowserFensterHoehe']."&iXBezIntervallWert=".$iXBezIntervallWert."&oZeitIntervall=".$oZeitIntervall." target='_blank'>";?>
-                <?echo "<img border='0' src='./kurven/kurve2"."_".$iAktuelleZeit.".png?".$iAktuelleZeit."' width=$iBildBreite height=$iBildHoehe'>"?>
-                </a>
-            </td>
-            <td width="34%">
-
-                <?echo "<a href='./index.php?sNavigationsSeite=einzelnegrafik&bSelbstAufruf=yes&sFrmVonDatum=$sKonVonDatum&sFrmBisDatum=$sKonBisDatum&ESensor=W6&ETitel=Windrichtung%20in%20(0...360)�&kFarbe=darkred&iBrowserFensterBreite=".$_GET['iBrowserFensterBreite']."&iBrowserFensterHoehe=".$_GET['iBrowserFensterHoehe']."&iXBezIntervallWert=".$iXBezIntervallWert."&oZeitIntervall=".$oZeitIntervall." target='_blank'>";?>
-                <?echo "<img border='0' src='./kurven/kurve6"."_".$iAktuelleZeit.".png?".$iAktuelleZeit."' width=$iBildBreite height=$iBildHoehe'>"?>
-                </a>
-            </td>
-        </tr>
-        <tr>
-            <td valign="top">
-                <p ><b><h3>Globalstrahlung:</h3></b></p>
-                <p class="FormInfoText">Summe aus direkter Sonnenstrahlung und diffuser Himmelsstrahlung.</p>
-            </td>
-
-            <td width="33%" valign="top">
-                <?echo "<a href='./index.php?sNavigationsSeite=einzelnegrafik&bSelbstAufruf=yes&sFrmVonDatum=$sKonVonDatum&sFrmBisDatum=$sKonBisDatum&ESensor=W4&ETitel=Globalstrahlung%20in%20W/m^2&kFarbe=darkorchid4&iBrowserFensterBreite=".$_GET['iBrowserFensterBreite']."&iBrowserFensterHoehe=".$_GET['iBrowserFensterHoehe']."&iXBezIntervallWert=".$iXBezIntervallWert."&oZeitIntervall=".$oZeitIntervall." target='_blank'>";?>
-                <?echo "<img border='0' src='./kurven/kurve4"."_".$iAktuelleZeit.".png?".$iAktuelleZeit."' width=$iBildBreite height=$iBildHoehe'>"?>
-
-                </a>
-            </td>
-
-            <td width="34%" valign="top">
-
-                <p ><b><h3>Windrichtung:</h3></b></p>
-                <p class="FormInfoText">
-                    Es bedeutet:
-
-                <table  border="1" align="left">
-                    <tr>
-                        <td  >
-                            0�</td>
-                        <td  >
-                            Wind aus Norden</td>
-                    </tr>
-                    <tr>
-                        <td  >
-
-                            90�</td>
-                        <td  >
-                            Wind aus Osten</td>
-                    </tr>
-                    <tr>
-                        <td >
-
-                            180�</td>
-                        <td>
-                            Wind aus S�den</td>
-                    </tr>
-                    <tr>
-                        <td>
-
-                            270�</td>
-                        <td>
-                            Wind aus Westen</td>
-                    </tr>
-                    <tr>
-                        <td>
-
-                            360�</td>
-                        <td  valign="top" >
-                            Wind aus Norden</td>
-                    </tr>
-                </table>
-                </p>
-
-            </td>
-        </tr>
-    </table>
+        ?>
+        <div style="margin-top: 20px" class="imgBox gallery_product col-lg-4 col-md-4 col-sm-4 col-xs-6">
+            <?echo "<a href='./index.php?sNavigationsSeite=einzelnegrafik&bSelbstAufruf=yes&sFrmVonDatum=$sKonVonDatum&sFrmBisDatum=$sKonBisDatum&ESensor=W1&ETitel=Druck%20in%20hpa&kFarbe=darkgreen&iBrowserFensterBreite=".$_GET['iBrowserFensterBreite']."&iBrowserFensterHoehe=".$_GET['iBrowserFensterHoehe']."&iXBezIntervallWert=".$iXBezIntervallWert."&oZeitIntervall=".$oZeitIntervall." target='_blank'>";?>
+            <?echo "<img class='hovereffect img-thumbnail img-responsive' border='0' src='./kurven/kurve1"."_".$iAktuelleZeit.".png?".$iAktuelleZeit."' width=$iBildBreite height=$iBildHoehe'>"?>
+            </a>
+        </div>
+        <div style="margin-top: 20px" class="gallery_product col-lg-4 col-md-4 col-sm-4 col-xs-6">
+            <?echo "<a href='./index.php?sNavigationsSeite=einzelnegrafik&bSelbstAufruf=yes&sFrmVonDatum=$sKonVonDatum&sFrmBisDatum=$sKonBisDatum&ESensor=W0&ETitel=Temperatur%20in%20�C&kFarbe=red&iBrowserFensterBreite=".$_GET['iBrowserFensterBreite']."&iBrowserFensterHoehe=".$_GET['iBrowserFensterHoehe']."&iXBezIntervallWert=".$iXBezIntervallWert."&oZeitIntervall=".$oZeitIntervall." target='_blank'>";?>
+            <?echo "<img class='img-thumbnail img-responsive' border='0' src='./kurven/kurve0"."_".$iAktuelleZeit.".png?".$iAktuelleZeit."' width=$iBildBreite height=$iBildHoehe'>"?>
+            </a>
+        </div>
+        <div style="margin-top: 20px" class="gallery_product col-lg-4 col-md-4 col-sm-4 col-xs-6">
+            <?echo "<a href='./index.php?sNavigationsSeite=einzelnegrafik&bSelbstAufruf=yes&sFrmVonDatum=$sKonVonDatum&sFrmBisDatum=$sKonBisDatum&ESensor=W5&ETitel=Windgeschwindigkeit%20in%20km/h&kFarbe=brown&iBrowserFensterBreite=".$_GET['iBrowserFensterBreite']."&iBrowserFensterHoehe=".$_GET['iBrowserFensterHoehe']."&iXBezIntervallWert=".$iXBezIntervallWert."&oZeitIntervall=".$oZeitIntervall." target='_blank'>";?>
+            <?echo "<img class='img-thumbnail img-responsive' border='0' src='./kurven/kurve5"."_".$iAktuelleZeit.".png?".$iAktuelleZeit."' width=$iBildBreite height=$iBildHoehe'>"?>
+            </a>
+        </div>
+        <div style="margin-top: 20px" class="gallery_product col-lg-4 col-md-4 col-sm-4 col-xs-6">
+            <?echo "<a href='./index.php?sNavigationsSeite=einzelnegrafik&bSelbstAufruf=yes&sFrmVonDatum=$sKonVonDatum&sFrmBisDatum=$sKonBisDatum&ESensor=W3&ETitel=Regen%20in mm/m^2&kFarbe=black&iBrowserFensterBreite=".$_GET['iBrowserFensterBreite']."&iBrowserFensterHoehe=".$_GET['iBrowserFensterHoehe']."&iXBezIntervallWert=".$iXBezIntervallWert."&oZeitIntervall=".$oZeitIntervall." target='_blank'>";?>
+            <?echo "<img class='img-thumbnail img-responsive' border='0' src='./kurven/kurve3"."_".$iAktuelleZeit.".png?".$iAktuelleZeit."' width=$iBildBreite height=$iBildHoehe'>"?>
+            </a>
+        </div>
+        <div style="margin-top: 20px" class="gallery_product col-lg-4 col-md-4 col-sm-4 col-xs-6">
+            <?echo "<a href='./index.php?sNavigationsSeite=einzelnegrafik&bSelbstAufruf=yes&sFrmVonDatum=$sKonVonDatum&sFrmBisDatum=$sKonBisDatum&ESensor=W2&ETitel=Feuchte%20in%20%&kFarbe=darkblue&iBrowserFensterBreite=".$_GET['iBrowserFensterBreite']."&iBrowserFensterHoehe=".$_GET['iBrowserFensterHoehe']."&iXBezIntervallWert=".$iXBezIntervallWert."&oZeitIntervall=".$oZeitIntervall." target='_blank'>";?>
+            <?echo "<img class='img-thumbnail img-responsive' border='0' src='./kurven/kurve2"."_".$iAktuelleZeit.".png?".$iAktuelleZeit."' width=$iBildBreite height=$iBildHoehe'>"?>
+            </a>
+        </div>
+        <div style="margin-top: 20px" class="gallery_product col-lg-4 col-md-4 col-sm-4 col-xs-6">
+            <?echo "<a href='./index.php?sNavigationsSeite=einzelnegrafik&bSelbstAufruf=yes&sFrmVonDatum=$sKonVonDatum&sFrmBisDatum=$sKonBisDatum&ESensor=W6&ETitel=Windrichtung%20in%20(0...360)�&kFarbe=darkred&iBrowserFensterBreite=".$_GET['iBrowserFensterBreite']."&iBrowserFensterHoehe=".$_GET['iBrowserFensterHoehe']."&iXBezIntervallWert=".$iXBezIntervallWert."&oZeitIntervall=".$oZeitIntervall." target='_blank'>";?>
+            <?echo "<img class='img-thumbnail img-responsive' border='0' src='./kurven/kurve6"."_".$iAktuelleZeit.".png?".$iAktuelleZeit."' width=$iBildBreite height=$iBildHoehe'>"?>
+            </a>
+        </div>
+        <div style="margin-top: 20px" class="well well-lg gallery_product col-lg-4 col-md-4 col-sm-4 col-xs-6">
+            <blockquote>
+                <p>Globalstrahlung: </p>
+                <footer>Summe aus direkter Sonnenstrahlung und diffuser Himmelsstrahlung.</footer>
+            </blockquote>
+        </div>
+        <div style="margin-top: 20px" class="gallery_product col-lg-4 col-md-4 col-sm-4 col-xs-6">
+            <?echo "<a href='./index.php?sNavigationsSeite=einzelnegrafik&bSelbstAufruf=yes&sFrmVonDatum=$sKonVonDatum&sFrmBisDatum=$sKonBisDatum&ESensor=W4&ETitel=Globalstrahlung%20in%20W/m^2&kFarbe=darkorchid4&iBrowserFensterBreite=".$_GET['iBrowserFensterBreite']."&iBrowserFensterHoehe=".$_GET['iBrowserFensterHoehe']."&iXBezIntervallWert=".$iXBezIntervallWert."&oZeitIntervall=".$oZeitIntervall." target='_blank'>";?>
+            <?echo "<img class='img-thumbnail img-responsive' border='0' src='./kurven/kurve4"."_".$iAktuelleZeit.".png?".$iAktuelleZeit."' width=$iBildBreite height=$iBildHoehe'>"?>
+            </a>
+        </div>
+        <div style="margin-top: 20px" class="well gallery_product col-lg-4 col-md-4 col-sm-4 col-xs-6">
+            <blockquote>
+                <p>Windrichtung: </p>
+                <footer> Bedeutung </footer>
+            </blockquote>
+            <table style="margin-top: 20px" class="table table-responsive table-bordered"  border="1" align="left">
+                <tr>
+                    <td>0�</td>
+                    <td>Wind aus Norden</td>
+                </tr>
+                <tr>
+                    <td>90�</td>
+                    <td>Wind aus Osten</td>
+                </tr>
+                <tr>
+                    <td>180�</td>
+                    <td>Wind aus S�den</td>
+                </tr>
+                <tr>
+                    <td>270�</td>
+                    <td>Wind aus Westen</td>
+                </tr>
+                <tr>
+                    <td>360�</td>
+                    <td>Wind aus Norden</td>
+                </tr>
+            </table>
+        </div>
+    </div>
 </div>
