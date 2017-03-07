@@ -114,7 +114,7 @@
         ?>
         <div style="margin-top: 20px" class="imgBox gallery_product col-lg-4 col-md-4 col-sm-4 col-xs-6">
             <?echo "<a href='./index.php?sNavigationsSeite=einzelnegrafik&bSelbstAufruf=yes&sFrmVonDatum=$sKonVonDatum&sFrmBisDatum=$sKonBisDatum&ESensor=W1&ETitel=Druck%20in%20hpa&kFarbe=darkgreen&iBrowserFensterBreite=".$_GET['iBrowserFensterBreite']."&iBrowserFensterHoehe=".$_GET['iBrowserFensterHoehe']."&iXBezIntervallWert=".$iXBezIntervallWert."&oZeitIntervall=".$oZeitIntervall." target='_blank'>";?>
-            <?echo "<img class='hovereffect img-thumbnail img-responsive' border='0' src='./kurven/kurve1"."_".$iAktuelleZeit.".png?".$iAktuelleZeit."' width=$iBildBreite height=$iBildHoehe'>"?>
+            <?echo "<img class='imgBox img-thumbnail img-responsive' border='0' src='./kurven/kurve1"."_".$iAktuelleZeit.".png?".$iAktuelleZeit."' width=$iBildBreite height=$iBildHoehe'>"?>
             </a>
         </div>
         <div style="margin-top: 20px" class="gallery_product col-lg-4 col-md-4 col-sm-4 col-xs-6">

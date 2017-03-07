@@ -136,51 +136,47 @@ if($bGlobalDebug){
             ?>
         </div>
         <div class="form-group row row-content">
-            <div class="col-sm-4">
-                <label for="zeitIntervall">
-                    Wählen Sie das Beschriftungsintervall der X-Achse aus und klicken Sie anschliessend auf Aktualisieren
-                </label>
-            </div>
-            <div class="col-sm-8">
-                <div class="btn-group" role="group" id="zeitIntervall">
-                    <button type="button" class="btn btn-default" VALUE="6" NAME="oZeitIntervall"  <?if(($oZeitIntervall==6) ||(!isset($oZeitIntervall))){echo "checked";}?> onClick="anpassenVonUndBis('xgrid',<? echo "'".$seite."'" ?>)" >
-                        6 Stunden
-                    </button>
-                    <button type="button" class="btn btn-default" VALUE="12" NAME="oZeitIntervall" <?if($oZeitIntervall==12){echo "checked";}?> onClick="anpassenVonUndBis('xgrid',<? echo "'".$seite."'" ?>)">
-                        12 Stunden
-                    </button>
-                    <button type="button" class="btn btn-default" VALUE="24" NAME="oZeitIntervall" <?if($oZeitIntervall==24){echo "checked";}?> onClick="anpassenVonUndBis('xgrid',<? echo "'".$seite."'" ?>)">
-                        24 Stunden
-                    </button>
-                    <button type="button" class="btn btn-default" VALUE="168" NAME="oZeitIntervall" <?if($oZeitIntervall==168){echo "checked";}?> onClick="anpassenVonUndBis('xgrid',<? echo "'".$seite."'" ?>)">
-                        1 Woche
-                    </button>
-                    <button type="button" class="btn btn-default" VALUE="720" NAME="oZeitIntervall" <?if($oZeitIntervall==720){echo "checked";}?> onClick="anpassenVonUndBis('xgrid',<? echo "'".$seite."'" ?>)">
-                        1 Monat
-                    </button>
-                    <button type="button" class="btn btn-default" VALUE="8760" NAME="oZeitIntervall" <?if($oZeitIntervall==8760){echo "checked";}?> onClick="anpassenVonUndBis('xgrid',<? echo "'".$seite."'" ?>)">
-                        1 Jahr
-                    </button>
-                    <?
-                    if($_GET['sNavigationsSeite']!="datenexport"){
-                        echo "<SELECT class='selectpicker' NAME='iXBezIntervallWert'>";
-                        echo "<OPTION "; if($iXBezIntervallWert==1){echo "selected ";} echo " VALUE='1'>10 Minuten";
-                        echo "<OPTION "; if($iXBezIntervallWert==3){echo "selected ";} echo " VALUE='3'>30 Minuten";
-                        echo "<OPTION "; if(($iXBezIntervallWert==6) ||(!isset($iXBezIntervallWert))){echo "selected ";} echo "VALUE='6' >1 Stunde";
-                        echo "<OPTION "; if($iXBezIntervallWert==72){echo "selected ";} echo " VALUE='72'>12 Stunden";
-                        echo "<OPTION "; if($iXBezIntervallWert==144){echo "selected ";} echo " VALUE='144'>1 Tag";
-                        echo "<OPTION "; if($iXBezIntervallWert==1008){echo "selected ";} echo " VALUE='1008'>1 Woche";
-                        echo "<OPTION "; if($iXBezIntervallWert==4320){echo "selected ";} echo " VALUE='4320'>1 Monat";
-                        echo "<OPTION "; if($iXBezIntervallWert==52560){echo "selected ";} echo " VALUE='52560'>1 Jahr";
-                        echo "</SELECT>";
-                    }else{
-                        echo "<td>";
-                        echo "<input type='hidden' NAME='iXBezIntervallWert'>";
-                        echo "</SELECT>";
-                        echo "</td>";
-                    }
-                    ?>
-                </div>
+            <label for="zeitIntervall">
+                Wählen Sie das Beschriftungsintervall der X-Achse aus und klicken Sie anschliessend auf Aktualisieren
+            </label>
+            <div class="btn-group" role="group" id="zeitIntervall">
+                <button type="button" class="btn btn-default" VALUE="6" NAME="oZeitIntervall"  <?if(($oZeitIntervall==6) ||(!isset($oZeitIntervall))){echo "checked";}?> onClick="anpassenVonUndBis('xgrid',<? echo "'".$seite."'" ?>)" >
+                    6 Stunden
+                </button>
+                <button type="button" class="btn btn-default" VALUE="12" NAME="oZeitIntervall" <?if($oZeitIntervall==12){echo "checked";}?> onClick="anpassenVonUndBis('xgrid',<? echo "'".$seite."'" ?>)">
+                    12 Stunden
+                </button>
+                <button type="button" class="btn btn-default" VALUE="24" NAME="oZeitIntervall" <?if($oZeitIntervall==24){echo "checked";}?> onClick="anpassenVonUndBis('xgrid',<? echo "'".$seite."'" ?>)">
+                    24 Stunden
+                </button>
+                <button type="button" class="btn btn-default" VALUE="168" NAME="oZeitIntervall" <?if($oZeitIntervall==168){echo "checked";}?> onClick="anpassenVonUndBis('xgrid',<? echo "'".$seite."'" ?>)">
+                    1 Woche
+                </button>
+                <button type="button" class="btn btn-default" VALUE="720" NAME="oZeitIntervall" <?if($oZeitIntervall==720){echo "checked";}?> onClick="anpassenVonUndBis('xgrid',<? echo "'".$seite."'" ?>)">
+                    1 Monat
+                </button>
+                <button type="button" class="btn btn-default" VALUE="8760" NAME="oZeitIntervall" <?if($oZeitIntervall==8760){echo "checked";}?> onClick="anpassenVonUndBis('xgrid',<? echo "'".$seite."'" ?>)">
+                    1 Jahr
+                </button>
+                <?
+                if($_GET['sNavigationsSeite']!="datenexport"){
+                    echo "<SELECT class='selectpicker' NAME='iXBezIntervallWert'>";
+                    echo "<OPTION "; if($iXBezIntervallWert==1){echo "selected ";} echo " VALUE='1'>10 Minuten";
+                    echo "<OPTION "; if($iXBezIntervallWert==3){echo "selected ";} echo " VALUE='3'>30 Minuten";
+                    echo "<OPTION "; if(($iXBezIntervallWert==6) ||(!isset($iXBezIntervallWert))){echo "selected ";} echo "VALUE='6' >1 Stunde";
+                    echo "<OPTION "; if($iXBezIntervallWert==72){echo "selected ";} echo " VALUE='72'>12 Stunden";
+                    echo "<OPTION "; if($iXBezIntervallWert==144){echo "selected ";} echo " VALUE='144'>1 Tag";
+                    echo "<OPTION "; if($iXBezIntervallWert==1008){echo "selected ";} echo " VALUE='1008'>1 Woche";
+                    echo "<OPTION "; if($iXBezIntervallWert==4320){echo "selected ";} echo " VALUE='4320'>1 Monat";
+                    echo "<OPTION "; if($iXBezIntervallWert==52560){echo "selected ";} echo " VALUE='52560'>1 Jahr";
+                    echo "</SELECT>";
+                }else{
+                    echo "<td>";
+                    echo "<input type='hidden' NAME='iXBezIntervallWert'>";
+                    echo "</SELECT>";
+                    echo "</td>";
+                }
+                ?>
             </div>
         </div>
     </form>

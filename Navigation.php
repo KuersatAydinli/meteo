@@ -20,7 +20,7 @@ Darstellung</a>&nbsp;&nbsp;&nbsp;
 
 
 
-<nav class="navbar navbar-inverse" role="navigation">
+<nav class="navbar navbar-inverse" role="navigation" data-offset-top="300">
     <div class="container-fluid">
         <div class="row">
             <div class="col-sm-12">

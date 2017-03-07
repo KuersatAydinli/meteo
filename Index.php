@@ -14,14 +14,21 @@ if($bGlobalDebug){
 <head>
 <META http-equiv="Content-Language" content="de-ch">
 <META http-equiv="Content-Type" content="text/html; charset=windows-1252">
-<link	rel="stylesheet"	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+<!--<link	rel="stylesheet"	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 <link	rel="stylesheet"	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
 <link	href="css/bootstrap.min.css"	rel="stylesheet">
-<link	href="css/bootstrap-theme.min.css"	rel="stylesheet">
+<link	href="css/bootstrap-theme.min.css"	rel="stylesheet">-->
+<link href="bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="bower_components/bootstrap/dist/css/bootstrap-theme.min.css" rel="stylesheet">
+<link href="bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet">
 
-<script	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-<script	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 
+<!--<script	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>-->
+<script src="bower_components/jquery/dist/jquery.min.js"></script>
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.2/angular.min.js"></script>
 <script language="javascript" type="text/javascript" src="./utils.js">
 </script>
 
@@ -64,7 +71,12 @@ header("Pragma: no-cache"); // HTTP/1.0
 -->
 
 <body bgcolor="#CCCCFF" onLoad="linksAktualisieren()" onResize="linksAktualisieren()">
-
+<!--<div>
+    <label>Name:</label>
+    <input type="text" ng-model="yourName" placeholder="Enter a name here">
+    <hr>
+    <h1>Hello {{yourName}}!</h1>
+</div>-->
 <?php 
 //$url = $_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
 //echo urldecode($url);

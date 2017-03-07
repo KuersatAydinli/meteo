@@ -1,0 +1,27 @@
+{
+  "name": "meteo",
+  "homepage": "https://github.com/KuersatAydinli/meteo",
+  "authors": [
+    "KuersatAydinli <kuersat.aydinli@uzh.ch>"
+  ],
+  "description": "weather station of the LG Vaduz",
+  "main": "Index.php",
+  "keywords": [
+    "weather",
+    "LG",
+    "Vaduz"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "^1.6.2",
+    "bootstrap": "^3.3.7",
+    "font-awesome": "^4.7.0"
+  }
+}

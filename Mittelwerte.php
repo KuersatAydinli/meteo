@@ -1,4 +1,4 @@
-<div class="container-fluid">
+<div class="container">
     <div class="row row-content">
         <p><h2>Mittelwerte</h2></p>
     </div>
